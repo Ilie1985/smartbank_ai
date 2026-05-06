@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+database/*.db
+models/*.pkl
+data/raw_data/
+data/cleaned_data/
+data/Budget.csv
+data/personal_transactions.csv
+.env
+.DS_Store
