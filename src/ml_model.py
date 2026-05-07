@@ -68,6 +68,10 @@ def predict_next_month(model, monthly: pd.DataFrame) -> float:
 
     next_month_number = len(monthly) + 1
 
-    prediction = model.predict([[next_month_number]])
+    next_month_df = pd.DataFrame(
+        {"month_number": [next_month_number]}
+    )
+
+    prediction = model.predict(next_month_df)
 
     return float(prediction[0])
