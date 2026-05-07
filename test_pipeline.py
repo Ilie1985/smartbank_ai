@@ -5,17 +5,12 @@ from src.validate import (
     check_empty_data
 )
 from src.clean import clean_transactions, clean_budget
+from src.blockchain_audit import add_transaction_hashes
 from src.database import save_to_database, load_transactions, load_budget
 
 
 transactions_df = extract_csv("data/personal_transactions.csv")
 budget_df = extract_csv("data/Budget.csv")
-
-print("Transactions preview:")
-print(transactions_df.head())
-
-print("Budget preview:")
-print(budget_df.head())
 
 print("Transactions not empty:", check_empty_data(transactions_df))
 print("Budget not empty:", check_empty_data(budget_df))
@@ -30,13 +25,9 @@ print("Budget valid:", budget_valid)
 print("Missing budget columns:", budget_missing)
 
 cleaned_transactions = clean_transactions(transactions_df)
+cleaned_transactions = add_transaction_hashes(cleaned_transactions)
+
 cleaned_budget = clean_budget(budget_df)
-
-print("Cleaned transactions:")
-print(cleaned_transactions.head())
-
-print("Cleaned budget:")
-print(cleaned_budget.head())
 
 save_to_database(cleaned_transactions, "transactions")
 save_to_database(cleaned_budget, "budget")
@@ -44,8 +35,8 @@ save_to_database(cleaned_budget, "budget")
 loaded_transactions = load_transactions()
 loaded_budget = load_budget()
 
-print("Loaded transactions from SQLite:")
+print("Loaded transactions:")
 print(loaded_transactions.head())
 
-print("Loaded budget from SQLite:")
+print("Loaded budget:")
 print(loaded_budget.head())
