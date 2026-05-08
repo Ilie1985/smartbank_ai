@@ -1,0 +1,286 @@
+date,description,amount,transaction_type,category,account_name,location,payment_method,month,year,day,income,expense,transaction_hash
+2025-01-01,Salary Payment,2278.0,credit,Salary,Checking,London,Bank Transfer,2025-01,2025,1,2278.0,0.0,bfe43e77f76e0836252a3bd44e4e90b2c189bca8bf33b5288494652c3767b588
+2025-01-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-01,2025,2,0.0,950.0,684e953d87f751ef1c413cddbcd615503f9aa0debd9a344182c6cf97f6f9eac8
+2025-01-03,Credit Card Payment,316.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-01,2025,3,0.0,316.0,6a98d5f69c619c764b293cc1b6655fabf4f34acb8f4b1fdbfba8a6a2566f8e81
+2025-01-04,Gas Company,68.0,debit,Utilities,Checking,London,Direct Debit,2025-01,2025,4,0.0,68.0,5e230b37309fcb1183a6ee011b7928fe7684ea82a6d46922095a1954d26fa428
+2025-01-05,Electric Company,72.0,debit,Utilities,Checking,London,Direct Debit,2025-01,2025,5,0.0,72.0,43f0ce2aa5dd4ffcbe0a93fc252a5286eb4ed86076922046a78aca3b1f3d0ea9
+2025-01-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-01,2025,6,0.0,45.0,3849c81620257ac6bdf89717304309e52861518fc0496e1b722d005123528cb3
+2025-01-07,Phone Company,37.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-01,2025,7,0.0,37.0,09abc9237f0cdad69651d544d60c77a1c8f5c39b8f5fb88b2fd1298e38dccd7b
+2025-01-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-01,2025,8,0.0,12.99,dbd539c7b9c8245248f1c19d11743b82ea2a02d951815cfa80dabb148d66a89a
+2025-01-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-01,2025,9,0.0,10.99,dd67aa5896eb4c47c3b84fc959e840269e0c41bf1fb9a34c0bafa9dde16924fa
+2025-01-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-01,2025,10,0.0,76.0,50f2082eb8c5f6b1385474e8c9590ee40658bb5125ef6bcd164860ea8b0f4242
+2025-01-05,Grocery Store,64.0,debit,Groceries,Platinum Card,London,Debit Card,2025-01,2025,5,0.0,64.0,4bf9a80c573643108154daf140750d7b147d952cca69ba6a77693231c4b157cb
+2025-01-12,Grocery Store,58.0,debit,Groceries,Platinum Card,London,Debit Card,2025-01,2025,12,0.0,58.0,ef1663bb57e3889b16314445694ad35b9981916ef08f619a932fc3495bd1d841
+2025-01-19,Grocery Store,56.0,debit,Groceries,Platinum Card,London,Debit Card,2025-01,2025,19,0.0,56.0,813984f8693a4b52cd454ba96b9802875199c89becbc869eae7edc9f6d9ccec7
+2025-01-26,Grocery Store,93.0,debit,Groceries,Platinum Card,London,Debit Card,2025-01,2025,26,0.0,93.0,856084f98213648f3db33b218403a919ed9476f0f4bd7feb87de7f52c54e7a5a
+2025-01-11,American Tavern,25.0,debit,Restaurants,Silver Card,London,Credit Card,2025-01,2025,11,0.0,25.0,edada833660f8ad3b119522ba6739949464d3ddea1306d7883ba1192b09a45ec
+2025-01-23,American Tavern,47.0,debit,Restaurants,Silver Card,London,Credit Card,2025-01,2025,23,0.0,47.0,235db45976a1206182607b2c1f388aeb87f3ba651cac6765bd2de08c682b5869
+2025-01-14,Burger Shop,8.0,debit,Fast Food,Silver Card,London,Debit Card,2025-01,2025,14,0.0,8.0,9acf9067c5ac8265ce7a53849ad3d25c8e7243fded78bc45e18d0fc9bb3f43e1
+2025-01-28,Burger Shop,11.0,debit,Fast Food,Silver Card,London,Debit Card,2025-01,2025,28,0.0,11.0,714abac9e49206bbd07afaa10b2f7fcf90334da98fe6c4472b0215e67be5169b
+2025-01-13,Shell,51.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-01,2025,13,0.0,51.0,7ec4fcd720c02561cf21d23224e7bb7cb4805d2fa2b28365df13daf8dc75f24d
+2025-01-27,Shell,40.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-01,2025,27,0.0,40.0,22c1a407d8c3622b556f2aad89bfcf91205c5a68ec04c430c49e6d1a6c1e8e20
+2025-01-16,Amazon,131.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-01,2025,16,0.0,131.0,cc30f659cb771d8928dbb01d93450e16448d79f6adf52ac894d83812e5884752
+2025-01-20,Pharmacy,52.0,debit,Healthcare,Checking,London,Debit Card,2025-01,2025,20,0.0,52.0,7a671dac8fdad702907ec2cc25ceb751b50359826dd46181116a84dd180c1605
+2025-01-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-01,2025,21,0.0,28.0,5ab49ff48678208e4abcd10d7069deb79e60c73f9170c9696e2aa9dffc453128
+2025-01-24,Cinema,31.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-01,2025,24,0.0,31.0,924c3f12be993a53de842267f910918896c8b82a0d2a2e94f94f626f7dd892a4
+2025-02-01,Salary Payment,2306.0,credit,Salary,Checking,London,Bank Transfer,2025-02,2025,1,2306.0,0.0,2de9c94549f6e9f1def2b921d058f12229173d70259f6528c17d67de32ee679e
+2025-02-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-02,2025,2,0.0,950.0,63bea570ec68c9fed84895374bf0210ac558ea8230befeb0b82ea8023320a03b
+2025-02-03,Credit Card Payment,424.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-02,2025,3,0.0,424.0,14830f8d2c1bcd6c1d2ea15ba4af9d49d1022e1b2fda5f1247e741cc36124273
+2025-02-04,Gas Company,63.0,debit,Utilities,Checking,London,Direct Debit,2025-02,2025,4,0.0,63.0,785c267febc5058f7496b6acff3a5f1f77f405a2ec67cb36a1436f91cf58a8ba
+2025-02-05,Electric Company,72.0,debit,Utilities,Checking,London,Direct Debit,2025-02,2025,5,0.0,72.0,19c66615f3dc8afdeb8f48519ff589a33abf926f4b9d0d151d521b86b46b376e
+2025-02-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-02,2025,6,0.0,45.0,cc3472f826b71f6071dab2e0194a824f8c5da60e2c00b38bb1179c4c6050be49
+2025-02-07,Phone Company,34.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-02,2025,7,0.0,34.0,5bbd2e8c659c8a1c18fe3969489e594316351b6bd7dcdc2a0394ca1f645165be
+2025-02-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-02,2025,8,0.0,12.99,c5892f684f0120e4b767a6fee9af3bb1244f2b411df9544ae9de0a5e6fc7ed27
+2025-02-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-02,2025,9,0.0,10.99,4e4b80c503db42e95300b68a131863b72c857cdfb2bad736cb5edd026fe85deb
+2025-02-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-02,2025,10,0.0,76.0,ba7edc899864e9c5eaea361bdb3ddd2de429b95a062e818e2abffad4c5e0fd24
+2025-02-05,Grocery Store,60.0,debit,Groceries,Platinum Card,London,Debit Card,2025-02,2025,5,0.0,60.0,837ede84f58c20504156e8a1c3d000ab6f74eb20288c8b8d079a0d2c466bbae6
+2025-02-12,Grocery Store,94.0,debit,Groceries,Platinum Card,London,Debit Card,2025-02,2025,12,0.0,94.0,014674b619164ce7372e1b07c364dc100d25390e42061242919a09355b000800
+2025-02-19,Grocery Store,77.0,debit,Groceries,Platinum Card,London,Debit Card,2025-02,2025,19,0.0,77.0,d8d7880046f83a7a13ca67c551758bf5ebd1fa6c01600d0e922129e8804a22e8
+2025-02-26,Grocery Store,71.0,debit,Groceries,Platinum Card,London,Debit Card,2025-02,2025,26,0.0,71.0,cd2e236c8afe8be0f8de055f2badea6da1b5d0274a69d2f2baa5236775012cea
+2025-02-11,Italian Restaurant,29.0,debit,Restaurants,Silver Card,London,Credit Card,2025-02,2025,11,0.0,29.0,284e420b49704ea54ce43f53d5b8eb90284884cd7b047d80ed1adf780f1cb483
+2025-02-23,Thai Restaurant,41.0,debit,Restaurants,Silver Card,London,Credit Card,2025-02,2025,23,0.0,41.0,27187592d0b47e8f5cfd450e8e74054609dae0d385765acb07d28febe0052cec
+2025-02-14,Burger Shop,9.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-02,2025,14,0.0,9.0,a8f85cf1ea7497acd0f119fa9270ec0784578778a82337b2bc1cc1c7db141b5a
+2025-02-28,Burger Shop,13.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-02,2025,28,0.0,13.0,693c41b92d5bfaea63a94b05f83e4c9e153930a268908e030fd248e1a1e23c64
+2025-02-13,Shell,53.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-02,2025,13,0.0,53.0,8bba194b17a43d472c3639cac46260691115bd7d373ade30975043d01f6d4ae0
+2025-02-27,Shell,42.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-02,2025,27,0.0,42.0,366ade0a60b6417440ba86f95123fd9e91777651a86d9ffa6dcacfdd4e584c3e
+2025-02-16,Amazon,143.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-02,2025,16,0.0,143.0,2923b6884cb7d32d3e3ffb96e2a26607eed1e0ad6b2e040eab0879638d01a6c0
+2025-02-18,Hardware Store,46.0,debit,Home Improvement,Silver Card,London,Debit Card,2025-02,2025,18,0.0,46.0,f6ecf847c14663f857d413b4ccad298eeacf6277c64a3095315171c8781aadf7
+2025-02-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-02,2025,21,0.0,28.0,1487313584a806e542ab5f9d7c4ca6406d4a897b97716b5cd4fc8b6e05764805
+2025-02-24,Cinema,32.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-02,2025,24,0.0,32.0,2921bf2e5d6f958055e3f306b04ab533a02cb0588c3c30f9bad8b1444c20aae5
+2025-03-01,Salary Payment,2281.0,credit,Salary,Checking,London,Bank Transfer,2025-03,2025,1,2281.0,0.0,7d9c43082a5f330a36b37baf674290a62305dfd6badd87533c2a1c440789f5af
+2025-03-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-03,2025,2,0.0,950.0,29bf9394003e1e0b86e17ad94b19b73de668978d02e9a9f95fc2d31fd2c3af39
+2025-03-03,Credit Card Payment,406.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-03,2025,3,0.0,406.0,0ba4a551baa39e6fa54ada5e538133c51f9bf8de8717297f55d4c993bd1767c2
+2025-03-04,Gas Company,47.0,debit,Utilities,Checking,London,Direct Debit,2025-03,2025,4,0.0,47.0,36df5cc740d57d0b6ecb678a99241669c594fc5abaab8e0fbec0e8e645783f50
+2025-03-05,Electric Company,90.0,debit,Utilities,Checking,London,Direct Debit,2025-03,2025,5,0.0,90.0,500cf9705d40b930abf3a4d8e830531b7ac3e7a807c66f987985b140828ad054
+2025-03-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-03,2025,6,0.0,45.0,063099bfcc6277c6ff1e631a9a083d9cfb1bf73f283f21af2a5ff16132d1a448
+2025-03-07,Phone Company,38.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-03,2025,7,0.0,38.0,2842dd0fc913111c179428234a19bb3c42b75bb4902633ecd1eb811d8aacb271
+2025-03-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-03,2025,8,0.0,12.99,04796e458201b743c22a924d2b9a43c6392267a7fda6945e357ea84fbe076cdf
+2025-03-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-03,2025,9,0.0,10.99,9d0cf32b3c3f3d240f25a341abad5ae990f74e54db3d249463ae095060e07619
+2025-03-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-03,2025,10,0.0,76.0,27f032613d956c699ce0c0cc4b314613aadb936b6f4f60aed6047bf5b2ad516a
+2025-03-05,Grocery Store,90.0,debit,Groceries,Platinum Card,London,Debit Card,2025-03,2025,5,0.0,90.0,430497ee14c42e8337fecd474afb2eacae4a35575145acf4978a9d3a5beb6e6e
+2025-03-12,Grocery Store,89.0,debit,Groceries,Platinum Card,London,Debit Card,2025-03,2025,12,0.0,89.0,6b9756a28f54f3cf3edc41929f37b27c799b0f1beb2067ca96ad2d47d88cd1a1
+2025-03-19,Grocery Store,73.0,debit,Groceries,Platinum Card,London,Debit Card,2025-03,2025,19,0.0,73.0,6c704a484efa98d4c94b3c4834fa2cf716fca4d3a55a4906d5e1c9717cfbc480
+2025-03-26,Grocery Store,86.0,debit,Groceries,Platinum Card,London,Debit Card,2025-03,2025,26,0.0,86.0,e06645029050a4cc1cc9cfd19cd49aa93d76c8ff671b33b8d6fa903f8bf76a91
+2025-03-11,Thai Restaurant,24.0,debit,Restaurants,Silver Card,London,Credit Card,2025-03,2025,11,0.0,24.0,41f48cf04893ea9a4d6cb7f43796d33308e87b1c0a17694a1dad945e5b2b6e26
+2025-03-23,Thai Restaurant,34.0,debit,Restaurants,Silver Card,London,Credit Card,2025-03,2025,23,0.0,34.0,1f1339f2b5a3e7e72f0bafe086bb12f57810a7216ed7ed0084e18bf1834b2219
+2025-03-14,Sandwich Bar,9.0,debit,Fast Food,Silver Card,London,Debit Card,2025-03,2025,14,0.0,9.0,18e00bb18c4fb73a87c68b5f1d5786a1fe6abbccd130c4441bdcc68d55cc6912
+2025-03-28,Burger Shop,14.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-03,2025,28,0.0,14.0,0d17831a4c92bd55429ac170fbb2ae6a7155ac85adcb44e62a4555eed634279b
+2025-03-13,Shell,48.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-03,2025,13,0.0,48.0,62b5622bee61edf68792d21770608d545437f20d14992de5c0b31ee741baa555
+2025-03-27,Shell,54.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-03,2025,27,0.0,54.0,39091576910acb12cc3dfd456ecd4dedc148657800b9e19cd5d47ff633de9550
+2025-03-16,Amazon,146.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-03,2025,16,0.0,146.0,218f02fa78b772bbd8bcc5d4effdb5b633bd81c644f01ea5046ab2f24b54e51a
+2025-03-20,Pharmacy,41.0,debit,Healthcare,Checking,London,Debit Card,2025-03,2025,20,0.0,41.0,75d6a6eeec1a136e45c3f81c8889237cbaf63d706068f9fc9c5472f547784f64
+2025-03-24,Cinema,23.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-03,2025,24,0.0,23.0,84a63373b0de5761b39470fd6d997972acd7fa53a4ab7df8b4050a0e012e529c
+2025-04-01,Salary Payment,2344.0,credit,Salary,Checking,London,Bank Transfer,2025-04,2025,1,2344.0,0.0,9e7cd13e7f58cd3d8eea6282ab7c39f4a0a1df0958e95524d03859313adc3783
+2025-04-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-04,2025,2,0.0,950.0,b83a853eba3c08d6c85656cf36c7c7a94c0435447e56fb9ad63c67ae79a6060e
+2025-04-03,Credit Card Payment,400.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-04,2025,3,0.0,400.0,5de3dc08329a4b0eb37c7b49b740ed37abb649308bc624e937df1f6062b55f3e
+2025-04-04,Gas Company,51.0,debit,Utilities,Checking,London,Direct Debit,2025-04,2025,4,0.0,51.0,96209adea894084040ef485d17ca26529c6a846e6c78ac35e2ad692ee55cb7b0
+2025-04-05,Electric Company,72.0,debit,Utilities,Checking,London,Direct Debit,2025-04,2025,5,0.0,72.0,edb066e6be485c9ab4df6ab640adf0d109cb386d787291cc5de02e2fb484f000
+2025-04-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-04,2025,6,0.0,45.0,d3909864428662053d276b786119bd4b24a81989c20507b44fb23601724054bb
+2025-04-07,Phone Company,44.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-04,2025,7,0.0,44.0,c0eecf87127b78d609f4600214a0a9f47a4c490d6835d9dfeb7655772ecda0a4
+2025-04-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-04,2025,8,0.0,12.99,09473ec19cca9bf41a95725d705bf5d93ebb0c5f3032308932f7920f51b143a5
+2025-04-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-04,2025,9,0.0,10.99,cbb73912b938631ceff223a67ad1e96c575b48a0a5722d33aadcc0813b0ee269
+2025-04-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-04,2025,10,0.0,76.0,5a06b54b19ec18d0c03d445dbccbfc1f75c8f6ceb6009770e4efd894bc07cf98
+2025-04-05,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-04,2025,5,0.0,91.0,52f8d025a9be9d30c7f59a8773d86345348f97c8aa5ff2c35c872e81d3342c42
+2025-04-12,Grocery Store,54.0,debit,Groceries,Platinum Card,London,Debit Card,2025-04,2025,12,0.0,54.0,217953ed619fff0a9abe163b9ddc7b95054245ee484c08a4661fe983161d6c98
+2025-04-19,Grocery Store,88.0,debit,Groceries,Platinum Card,London,Debit Card,2025-04,2025,19,0.0,88.0,8891d07274fa102742100afe651b8791c6e18024e487f786d8d5073e4bb06fcf
+2025-04-26,Grocery Store,90.0,debit,Groceries,Platinum Card,London,Debit Card,2025-04,2025,26,0.0,90.0,dcac94b304884f59f840fb254d021fcd20f02ec569574ee1721d6bb0de84a60d
+2025-04-11,Thai Restaurant,35.0,debit,Restaurants,Silver Card,London,Credit Card,2025-04,2025,11,0.0,35.0,685d4988669ac0ede65d17d4634b3085b026fd42a17fccb8aa8343a65d2cd916
+2025-04-23,Thai Restaurant,49.0,debit,Restaurants,Silver Card,London,Credit Card,2025-04,2025,23,0.0,49.0,008ae93b4e4491ba2cb42a0ba90189db2dd0dac07d9b8837f1a147985dd9a6b5
+2025-04-14,Sandwich Bar,12.0,debit,Fast Food,Silver Card,London,Debit Card,2025-04,2025,14,0.0,12.0,1239a32a5d5e294c0b1b19d3978895080edfa48b23521e3bcd9c4ed5956f88e3
+2025-04-28,Coffee Shop,13.0,debit,Fast Food,Silver Card,London,Debit Card,2025-04,2025,28,0.0,13.0,7579114951e5b7e7d05f2cfe92142974e37a4641e366533251887cb75af222a7
+2025-04-13,Shell,41.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-04,2025,13,0.0,41.0,115f30713c8c3eb7b8d4e7b2ad1d38e0531d12a97b145e7cd00957984ef09aee
+2025-04-27,Shell,60.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-04,2025,27,0.0,60.0,14fad2d1dc02990bee2473bb7fb2e6171f6082f4764b6097def011c97d720a46
+2025-04-16,Amazon,44.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-04,2025,16,0.0,44.0,291b17598c64df12cc28f6ab65ca544f5c3eb35404e056d7cbcb60468810d596
+2025-04-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-04,2025,21,0.0,28.0,8ea3bb14b0acece772bc4e6745e249c78a298fec6d8969628a77dc4e77a03564
+2025-04-24,Cinema,28.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-04,2025,24,0.0,28.0,1075e6d93a0814c8928995e49f3ddf23153d750d2dfc24209de9be08c3bf1281
+2025-04-25,Weekend Travel Booking,362.0,debit,Travel,Platinum Card,Online,Credit Card,2025-04,2025,25,0.0,362.0,7d8c68ea7c2acc073903e2508b782424fd47f2e0a0052e61e3a703d3aae77ef9
+2025-05-01,Salary Payment,2318.0,credit,Salary,Checking,London,Bank Transfer,2025-05,2025,1,2318.0,0.0,3d5674201db67b67771b472e470fc11922290adbee32f5d00568be40f3eceaea
+2025-05-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-05,2025,2,0.0,950.0,e10e9a9effb10cb10a3bc243cd173c68d5c90685363a025d0064bc25cc32752b
+2025-05-03,Credit Card Payment,326.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-05,2025,3,0.0,326.0,946aaa9c27b932e0e997ab1457c7d75c842feede2b56fa891e43e36e989c5a84
+2025-05-04,Gas Company,51.0,debit,Utilities,Checking,London,Direct Debit,2025-05,2025,4,0.0,51.0,379ca13889d873c33c7ae0270f9d0e21a288aece3ae1b53d02ffd060fe82491a
+2025-05-05,Electric Company,75.0,debit,Utilities,Checking,London,Direct Debit,2025-05,2025,5,0.0,75.0,7245ed7b8a116d3c7fe478f7ab1c8832739b5a6b159b22284fcff8f3769e5140
+2025-05-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-05,2025,6,0.0,45.0,92ec63a24256263d41212506047f0085f44cab3a44864a41296da4568c6df632
+2025-05-07,Phone Company,37.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-05,2025,7,0.0,37.0,7875167201415be6cd16421e81e272f2e8be3eea8005f4331bdfdcbbdfd66661
+2025-05-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-05,2025,8,0.0,12.99,9aa9c73e157d79b590020893539fea4d1fa0ac029563f8ba25bc4af0ee2ded04
+2025-05-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-05,2025,9,0.0,10.99,33b1f76ea7b958d6a3279ffb37745c787c11293fedfb2ef7b993629564cea58c
+2025-05-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-05,2025,10,0.0,76.0,a18013ae2f23cf427f2a906ac887a297c4ba332bea2a5eba346d2ca4e3aaf108
+2025-05-05,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-05,2025,5,0.0,91.0,597c37cea2909715df8d9282e229407e3844ab9948358d26cbe1120b76f30b55
+2025-05-12,Grocery Store,81.0,debit,Groceries,Platinum Card,London,Debit Card,2025-05,2025,12,0.0,81.0,83e8fbf9fe49dd08cc65d6ecd0d5ac4ee7b4ea90fc7919530cc79cabf5af6d18
+2025-05-19,Grocery Store,75.0,debit,Groceries,Platinum Card,London,Debit Card,2025-05,2025,19,0.0,75.0,f650abe2603b1567ab8917dd11b9e0bfdb90b816e670b1e528724e51f6bbf509
+2025-05-26,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-05,2025,26,0.0,91.0,20f612e4255bf63a2da0392b8424068daf0a7ed9a9c4f0f9a3c4f3c17083ee24
+2025-05-11,Italian Restaurant,29.0,debit,Restaurants,Silver Card,London,Credit Card,2025-05,2025,11,0.0,29.0,22500c3deddba10b333f3ce8ab531b494ce1cc017f390491ac1f542fcf1cb49f
+2025-05-23,Italian Restaurant,28.0,debit,Restaurants,Silver Card,London,Credit Card,2025-05,2025,23,0.0,28.0,b61364480a569cf766e81bf8af97725d8a21d8f1a156190b79ff552c2a5e09b5
+2025-05-14,Burger Shop,19.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-05,2025,14,0.0,19.0,a8c5b2e6c2d9bf8efa2487c795365119a430d854f34633b1ed2ceef1fd021398
+2025-05-28,Coffee Shop,17.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-05,2025,28,0.0,17.0,d09eb9b07fe41a4ccf328096b4c9e2913d4587a5601e0a44169217d3bdd7b945
+2025-05-13,Shell,52.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-05,2025,13,0.0,52.0,7625f89f335079538da3e1a5e3399e863c4bf8d2b9520d2ec41f5ac47ea11c5f
+2025-05-27,Shell,46.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-05,2025,27,0.0,46.0,47db54f23f81f36eb849ef322b0e5fd874840474a7eb8cdeda24dbfb252711e6
+2025-05-16,Amazon,86.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-05,2025,16,0.0,86.0,9e686e5a90b3123d8df5717d1c7360a7ea4624542b4b23df911cb60d98623377
+2025-05-18,Hardware Store,91.0,debit,Home Improvement,Silver Card,London,Debit Card,2025-05,2025,18,0.0,91.0,e68c4fabe541d6819084126fe23a88084c6bbcdc3fc0f995e90de176a536af9c
+2025-05-20,Pharmacy,26.0,debit,Healthcare,Checking,London,Debit Card,2025-05,2025,20,0.0,26.0,5d21ffff4aa013a7486aad69b150aa1ee2e6b3157116dfb678e16b5a6bd6cf8c
+2025-05-24,Cinema,34.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-05,2025,24,0.0,34.0,3aa228775baca370663b04b0f5278186b797ffd73e01eb948c8519804941f9c2
+2025-06-01,Salary Payment,2376.0,credit,Salary,Checking,London,Bank Transfer,2025-06,2025,1,2376.0,0.0,125422150e2217f1ed0a9da225dd67144300d9f7429cb43b75c16cc11b85be50
+2025-06-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-06,2025,2,0.0,950.0,5f91efe6a018f29947d529719214d41c307b3860f3f9aa706f9010b38232d439
+2025-06-03,Credit Card Payment,333.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-06,2025,3,0.0,333.0,9b6b3cc874ae514fd37c2138db0dde4247fadbc29ed8fa1fc569cc6935656f9f
+2025-06-04,Gas Company,69.0,debit,Utilities,Checking,London,Direct Debit,2025-06,2025,4,0.0,69.0,780009c452ac66bea86ba74dc93633fee3cc2d3511900938a95df1a293229f61
+2025-06-05,Electric Company,58.0,debit,Utilities,Checking,London,Direct Debit,2025-06,2025,5,0.0,58.0,0f1d0990603230abd3567caf4da0470d5c006da6fafc38212a7c3434345a9dff
+2025-06-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-06,2025,6,0.0,45.0,3273e4e1a858d465fed566dbe1a807099f4a6290e0be19dba7c1bdd674690db1
+2025-06-07,Phone Company,35.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-06,2025,7,0.0,35.0,1360f8693bd913322cbc1010ac2b48a07b71c92fc24209ba6d31ace119708e4f
+2025-06-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-06,2025,8,0.0,12.99,c9eef60844d1cb557f68952c06c449feab5d253bfc0bf0f6fef41286c7585203
+2025-06-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-06,2025,9,0.0,10.99,a918208ae268a6b846e18b5a57325e8c7491f0801bbf563ff1b0f23d42dcd055
+2025-06-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-06,2025,10,0.0,76.0,f23412aa684bac69352307d413883c3b8fa0f20a242d27b87a3353fb45f8abe7
+2025-06-05,Grocery Store,59.0,debit,Groceries,Platinum Card,London,Debit Card,2025-06,2025,5,0.0,59.0,f2bf947bb7d106aab43462b52423650385185ca5f937b9a986d1ee3615abb7e6
+2025-06-12,Grocery Store,90.0,debit,Groceries,Platinum Card,London,Debit Card,2025-06,2025,12,0.0,90.0,652fb8e62b8704caad698ea81c307f4ff87a4c9c530fc039cf4e37c72466c0c7
+2025-06-19,Grocery Store,60.0,debit,Groceries,Platinum Card,London,Debit Card,2025-06,2025,19,0.0,60.0,d456f0ab4ce819b94b726706910ff51ebca0d85f145436d0221e850ff8f73afd
+2025-06-26,Grocery Store,93.0,debit,Groceries,Platinum Card,London,Debit Card,2025-06,2025,26,0.0,93.0,fb7ef7f1bb0e937e74d9d737f785eb829d12a5d3281866ff3ca3a46b868dbda4
+2025-06-11,Italian Restaurant,24.0,debit,Restaurants,Silver Card,London,Credit Card,2025-06,2025,11,0.0,24.0,9b4e9e624b79d843eb2eaa5f37a01dc0a051cb21bf8d9ea9e4b920bd38d04905
+2025-06-23,Italian Restaurant,44.0,debit,Restaurants,Silver Card,London,Credit Card,2025-06,2025,23,0.0,44.0,614ed03b0c63199c253030fd2aed9b7d9cde10b6a94d8986b72d030db91bc00b
+2025-06-14,Coffee Shop,15.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-06,2025,14,0.0,15.0,80024146cb441f16fab8b60e243d0f97abf47ff09ab8dbdc4f5fe6772c3415e4
+2025-06-28,Coffee Shop,8.0,debit,Fast Food,Silver Card,London,Debit Card,2025-06,2025,28,0.0,8.0,0da1f28e6f913df98b84c0b2e336123c2536a5521c362714083c6425e45be30b
+2025-06-13,Shell,55.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-06,2025,13,0.0,55.0,69eb9b101fa68adde6078416b6379e8ef28ca2fde6a2be55f038caf559dbc476
+2025-06-27,Shell,51.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-06,2025,27,0.0,51.0,934c3c07786df1552b89b0d71d6973afe0a266d0ce94aa229dd5ccedb1e34d30
+2025-06-16,Amazon,136.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-06,2025,16,0.0,136.0,891548e4168b46b54092437f7bbf333a8a86f02991596f01aff77c9d5ee3fd64
+2025-06-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-06,2025,21,0.0,28.0,df876908eed68396fcc8aec5848469401cf776f42f5ffce99f741c3dcd6f8667
+2025-06-24,Cinema,26.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-06,2025,24,0.0,26.0,41c1c4922540f242492ddb9a4dea55bcefaa5a5c81e8aec2d91cfa85f28e0319
+2025-06-29,Emergency Car Repair,1250.0,debit,Auto & Transport,Checking,Birmingham,Debit Card,2025-06,2025,29,0.0,1250.0,3abf907898fd2d05373d94cd920796536ee98d6da246077e0ca25035d9a6ecb7
+2025-07-01,Salary Payment,2337.0,credit,Salary,Checking,London,Bank Transfer,2025-07,2025,1,2337.0,0.0,5bf13d3ff574fb067dfc91938a2e0d53ca0e8acd8e6cd6115de22e8d6a596005
+2025-07-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-07,2025,2,0.0,950.0,53f24f878b630caccb610a78556d2e5d9765b8f7ef01f1f1c0b78daef437823d
+2025-07-03,Credit Card Payment,338.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-07,2025,3,0.0,338.0,efa2ebdc4dd4bf1c0d7edc4dfa9962a8702098512f5e852851d3997b7de5a429
+2025-07-04,Gas Company,54.0,debit,Utilities,Checking,London,Direct Debit,2025-07,2025,4,0.0,54.0,521cf7f42bf3567f4946aceef211421c26948ef57e404166b07c5fa1d7fc3a6c
+2025-07-05,Electric Company,82.0,debit,Utilities,Checking,London,Direct Debit,2025-07,2025,5,0.0,82.0,f25a63d49a39440a675809e81b28900889fdaa938057adb97eb58650ec3b6105
+2025-07-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-07,2025,6,0.0,45.0,e25b1b17280ff1701d4e2806403860ae3207b5e3dc4f5f1e997000d7e8e5b410
+2025-07-07,Phone Company,36.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-07,2025,7,0.0,36.0,eb0b4270e5762f005cacce64816164eb482ae1974a455591d8f2fbe83aadcb81
+2025-07-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-07,2025,8,0.0,12.99,027bd8e99a91dd47cfd5dd694cb6df013e474120655212b2380be6166733f2a0
+2025-07-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-07,2025,9,0.0,10.99,222b3ebdc8907b0f5a3f873f30f3d9d4a3d71a7a85000c8f50bfb9ad46d3bf43
+2025-07-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-07,2025,10,0.0,76.0,491d129b9b01f4829ab9b7074e582afd0143ed0594096ab92202e169d76a1c8e
+2025-07-05,Grocery Store,79.0,debit,Groceries,Platinum Card,London,Debit Card,2025-07,2025,5,0.0,79.0,69fc42c36d331705153e3ad1783088a730de087d1de846242e8439fa9a4d3fd6
+2025-07-12,Grocery Store,50.0,debit,Groceries,Platinum Card,London,Debit Card,2025-07,2025,12,0.0,50.0,b8e761c3234d991e4e6bd0c59bf6a2de43d40491a1eacad74a168240a8d9f1e4
+2025-07-19,Grocery Store,66.0,debit,Groceries,Platinum Card,London,Debit Card,2025-07,2025,19,0.0,66.0,e81d43fa2d82744064ec1d072ac8999e7d7b107fac30e29f56c0a2fef408931b
+2025-07-26,Grocery Store,82.0,debit,Groceries,Platinum Card,London,Debit Card,2025-07,2025,26,0.0,82.0,2c52bded1513746e21aa9287a82ec9fa6438587f3414b46505ebd8fe26ccbddd
+2025-07-11,Thai Restaurant,52.0,debit,Restaurants,Silver Card,London,Credit Card,2025-07,2025,11,0.0,52.0,09b02fbee3d983c806270cd2bad0996b522ee979c300d4fcb52227011347fdbe
+2025-07-23,Thai Restaurant,39.0,debit,Restaurants,Silver Card,London,Credit Card,2025-07,2025,23,0.0,39.0,b39bc27d8f6a07670b50f46edf7059e24f51cc9aaaa1bf8ed6722d1a0437965d
+2025-07-14,Coffee Shop,16.0,debit,Fast Food,Silver Card,London,Debit Card,2025-07,2025,14,0.0,16.0,c15ae94ae20fdc7cd8757086717b2e021ea31cffd9e658b52b1cdbb99cf4b1cb
+2025-07-28,Burger Shop,13.0,debit,Fast Food,Silver Card,London,Debit Card,2025-07,2025,28,0.0,13.0,c52414f52f967d5f5f03ba38f29786a8d16e115d3281c4338b40b0cd3744b03b
+2025-07-13,Shell,51.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-07,2025,13,0.0,51.0,9fc70dc054ed050232fd851d33233056f21a1fe9ef6843c96bcde89c660f1dd0
+2025-07-27,Shell,58.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-07,2025,27,0.0,58.0,0977fb857b39427ee2ca401ee4cfc3c3f77a498ad2cf949b91a5a606d962a792
+2025-07-16,Amazon,158.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-07,2025,16,0.0,158.0,20eaa8e17772760373eeedcae4107f6a55a1acf261e86cbdba27e2783cea3817
+2025-07-20,Pharmacy,51.0,debit,Healthcare,Checking,London,Debit Card,2025-07,2025,20,0.0,51.0,347aa2f2bacb158746abed27b1bb50d2370a0b5cc5b3cc3fceedba415f12ff37
+2025-07-24,Cinema,18.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-07,2025,24,0.0,18.0,4d659025161e88b172d692607584c68d9babf7e2f3ba8d9e57834f46f6c0017d
+2025-08-01,Salary Payment,2332.0,credit,Salary,Checking,London,Bank Transfer,2025-08,2025,1,2332.0,0.0,675354f84de1311f0e81a01c2ba33444c2559fddd8638c1d057245ee5a294dfa
+2025-08-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-08,2025,2,0.0,950.0,58b6c05daa02a0e17c8b7bece0085418d5e920830133563fc5ddb0e2e324d7dd
+2025-08-03,Credit Card Payment,435.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-08,2025,3,0.0,435.0,d9d3388d3b243538c50d63f282aabfb12e2c136071da34424e49063d55dad3eb
+2025-08-04,Gas Company,45.0,debit,Utilities,Checking,London,Direct Debit,2025-08,2025,4,0.0,45.0,cd44007d8f255866e7b7c5c8ceae39f47c7971a43483a397051235821ba6fae2
+2025-08-05,Electric Company,62.0,debit,Utilities,Checking,London,Direct Debit,2025-08,2025,5,0.0,62.0,322d165967770083f535316974c735b20a3b3cc34d15ef84d410102ab09f680b
+2025-08-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-08,2025,6,0.0,45.0,5bd7d21bac5bc5c3499d3030fcee4880911513c452196e4d577b17cbf68bd45e
+2025-08-07,Phone Company,39.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-08,2025,7,0.0,39.0,8f5d6fca994428bae35fb1d80e4e21acadd961d2941f932f6c0c4732a88cdcad
+2025-08-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-08,2025,8,0.0,12.99,fbf4d50f5aea31399bc825e96aa4315e9722e331bff0d1e88a6bc8dbddfb1902
+2025-08-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-08,2025,9,0.0,10.99,265de3958415b94109543a19bb855b6a66d28883abcb06cc6476a12bfb04a9b1
+2025-08-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-08,2025,10,0.0,76.0,516256e7ebd2f73dbca756250d6e69e41b4a703055736e900906f72f8b5aa269
+2025-08-05,Grocery Store,69.0,debit,Groceries,Platinum Card,London,Debit Card,2025-08,2025,5,0.0,69.0,a2a0950e09a38d67ed88474c3855c3c18e287fb61c7774499427e3916428716d
+2025-08-12,Grocery Store,65.0,debit,Groceries,Platinum Card,London,Debit Card,2025-08,2025,12,0.0,65.0,70460d47eae8e26d73e43628b6cdc42a8cde65ab03d9eab208c530309a9f003c
+2025-08-19,Grocery Store,53.0,debit,Groceries,Platinum Card,London,Debit Card,2025-08,2025,19,0.0,53.0,5d533998955334342282a411f657d7a791d5fbf66b58733901dbe80284f369d5
+2025-08-26,Grocery Store,65.0,debit,Groceries,Platinum Card,London,Debit Card,2025-08,2025,26,0.0,65.0,5f76c18b1df45d83c95524b9b2465e1bf9e9c006ae0a276eefa366f69c049274
+2025-08-11,American Tavern,25.0,debit,Restaurants,Silver Card,London,Credit Card,2025-08,2025,11,0.0,25.0,58ce66a680adc96a2f962382dc579191ec58908817c16386fb86b9fa0eeafa86
+2025-08-23,Thai Restaurant,51.0,debit,Restaurants,Silver Card,London,Credit Card,2025-08,2025,23,0.0,51.0,c45989dcf4db9bd98a0d0df0dd36d685da8e47bd88de89dac451760aa709e20a
+2025-08-14,Burger Shop,20.0,debit,Fast Food,Silver Card,London,Debit Card,2025-08,2025,14,0.0,20.0,0c052b8f8d84136f1e618f741fa6e126f4b8c2df4670dff1bae886d6abf6915f
+2025-08-28,Burger Shop,18.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-08,2025,28,0.0,18.0,29ddd6c5df943961a5a8ec3b7ccccd2c7ccec8b41af16270038bb5131a41d9d5
+2025-08-13,Shell,51.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-08,2025,13,0.0,51.0,56d616926eca0bc5caa97fd8954b4a693dc5441f00a326f80aa8d2fba45b3c26
+2025-08-27,Shell,39.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-08,2025,27,0.0,39.0,f80eae93321407f9a194e76492d3e6c1fcf4da2164a0ce9917a9ef5715b36743
+2025-08-16,Amazon,73.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-08,2025,16,0.0,73.0,5a6d879036d40f2ab80551e2cfb44c3f8c6df2014504373ba82e2ac3a81e9773
+2025-08-18,Hardware Store,170.0,debit,Home Improvement,Silver Card,London,Debit Card,2025-08,2025,18,0.0,170.0,97f7afb72274cc26bc9075483b012d0604f8aa6fe090dce4eee61ccb8b350681
+2025-08-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-08,2025,21,0.0,28.0,79d13e909854038e66d48b90577c69804572708eacab8a73c5d1ea0ffbc10c5f
+2025-08-24,Cinema,37.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-08,2025,24,0.0,37.0,e0ec7c35dc35fedc70fc68176192efcc08383acb9a8114976ca039d08a6eb8da
+2025-08-25,Weekend Travel Booking,368.0,debit,Travel,Platinum Card,Online,Credit Card,2025-08,2025,25,0.0,368.0,b7f5c4b2502d873aa88aedf346bebefa0f6d574aab60bb2016077bd971eb41b5
+2025-09-01,Salary Payment,2304.0,credit,Salary,Checking,London,Bank Transfer,2025-09,2025,1,2304.0,0.0,83976387bea655f75540dcc6d11d9b1c9e475fdc9f012e5f97a61a0fa4e3dd30
+2025-09-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-09,2025,2,0.0,950.0,c2f9235528ddc822dc91923bb9680f59642d2d0d7a8c652df2c7bead3227188a
+2025-09-03,Credit Card Payment,361.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-09,2025,3,0.0,361.0,be8629f792f9f36c0e160ba250dd8b455317f0064f1abf875c750b61bc9a8b07
+2025-09-04,Gas Company,67.0,debit,Utilities,Checking,London,Direct Debit,2025-09,2025,4,0.0,67.0,f803b746e8318ba7814a9d82cc69e2abfadc1e9ce8391a5b4bef302a425d6ee6
+2025-09-05,Electric Company,74.0,debit,Utilities,Checking,London,Direct Debit,2025-09,2025,5,0.0,74.0,64627262b34c46280051296c22d36125ebb2798696fe506ded633e11fa4e5473
+2025-09-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-09,2025,6,0.0,45.0,7cd1cd70282f3fcca2311eca6779cf4ef1d9328c61bba7263142197c03aa9fe0
+2025-09-07,Phone Company,40.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-09,2025,7,0.0,40.0,52155215a93c45e6fbde3585dc972f55bda4d8d98b9d7692cb8d14f87d8e7281
+2025-09-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-09,2025,8,0.0,12.99,3f24484a0b70ef0f7e283e416039a688f7ea5f111f319dca84de6560a3dbbaf0
+2025-09-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-09,2025,9,0.0,10.99,4793fdd49645973870b083dfecc7b71538d4d1581a24d68be65ff7ff363eece2
+2025-09-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-09,2025,10,0.0,76.0,ec202d431f45edaf604d10d325686595df094a9df9391ac69747f38bfbfe3a17
+2025-09-05,Grocery Store,92.0,debit,Groceries,Platinum Card,London,Debit Card,2025-09,2025,5,0.0,92.0,8b95879926dee3dd53f0745a8bd641be42202db119d1da46451e869b854f4279
+2025-09-12,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-09,2025,12,0.0,91.0,36d849f2a8f8b282dc602af53434403f4d971c4aebeb2691e5901242a4db329e
+2025-09-19,Grocery Store,73.0,debit,Groceries,Platinum Card,London,Debit Card,2025-09,2025,19,0.0,73.0,b4ae12c95b789131d4000f5e107ab127e27ec8a11c42bf6dbe3834b57c524bbd
+2025-09-26,Grocery Store,78.0,debit,Groceries,Platinum Card,London,Debit Card,2025-09,2025,26,0.0,78.0,20211240cc04a89b75709eb1bed0ba2e6a6674d0654426447c870d57a77cdc68
+2025-09-11,American Tavern,48.0,debit,Restaurants,Silver Card,London,Credit Card,2025-09,2025,11,0.0,48.0,517408f81642e79f927b1c9f69efcb946e52f8a1e63c292b99ca30878eb9de90
+2025-09-23,Thai Restaurant,35.0,debit,Restaurants,Silver Card,London,Credit Card,2025-09,2025,23,0.0,35.0,b2bc5c989837418cf54d23b3b09249df1c68146db90077192b6b570ca8af1480
+2025-09-14,Burger Shop,9.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-09,2025,14,0.0,9.0,4cd30dd167d58df97a1dfa135d7e8cf375019e122174b258eb0efa54300e4c08
+2025-09-28,Burger Shop,17.0,debit,Fast Food,Silver Card,London,Debit Card,2025-09,2025,28,0.0,17.0,a5bbb539c5775a088e937e09235b256d6444fdd8c4cf8ad853493f93b3b9b19d
+2025-09-13,Shell,52.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-09,2025,13,0.0,52.0,23fa05fbc6e664bf5226ec57d025159d0f0adbb7622670d30c7c93b900ea437a
+2025-09-27,Shell,41.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-09,2025,27,0.0,41.0,779896d5c66b63692b4d4b8db37f8218e91a35295f6f55dd5db0001069c45d3a
+2025-09-16,Amazon,40.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-09,2025,16,0.0,40.0,77fdced380b9c146c9c85f49c7d70207497ae2bd69c8c2b25625d7342d8efe3b
+2025-09-20,Pharmacy,22.0,debit,Healthcare,Checking,London,Debit Card,2025-09,2025,20,0.0,22.0,8e6a2ae19b011151cb08949bdac28551e7f54ff34c20e8499fed598f620b531e
+2025-09-24,Cinema,38.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-09,2025,24,0.0,38.0,2250afb50ce21ea69c978d78c27767e559fe00961aed48bbb7810fb0682f5d9f
+2025-10-01,Salary Payment,2265.0,credit,Salary,Checking,London,Bank Transfer,2025-10,2025,1,2265.0,0.0,eed6b145fd5b07a6de9562157db71b70020790f7de8944068d36f353c9ce72ef
+2025-10-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-10,2025,2,0.0,950.0,5676d877856223f677ce9515689e9456d387d8a6ed78bb04233856ff600751e0
+2025-10-03,Credit Card Payment,368.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-10,2025,3,0.0,368.0,52b8a4f9d4898b3c26d5802db81d26ad8f8ce76686f2bc13ab46d2b212872fc2
+2025-10-04,Gas Company,47.0,debit,Utilities,Checking,London,Direct Debit,2025-10,2025,4,0.0,47.0,20bc2b33b6e2c95150c70efd422dc7913a1daa9ab8ee499aaaf390f691f2e859
+2025-10-05,Electric Company,57.0,debit,Utilities,Checking,London,Direct Debit,2025-10,2025,5,0.0,57.0,9ac7d2278579fa506ef310136f2be1c41ebbd8309dbe5178e891aa50b19085f3
+2025-10-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-10,2025,6,0.0,45.0,56610046a78f8a105180385e475a3382ebdbd111ccafb79f13d97cd05f682427
+2025-10-07,Phone Company,39.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-10,2025,7,0.0,39.0,3c841616308e4452f4457d8e745b04953a02b5f22ed17182d1998637bbd3110d
+2025-10-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-10,2025,8,0.0,12.99,3823637b4d3666dd763c8a28bfe9cef5b2f18ae1a8ea280b2c7987f44705cb8f
+2025-10-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-10,2025,9,0.0,10.99,3f1bd3f0345d67f632d9b92bae5555cce9198f42a2628d262f4b3301c91481a1
+2025-10-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-10,2025,10,0.0,76.0,8baf838f219a61314aacbd9f1f691a6444f255cca09f53f6bada04d2037c6dfd
+2025-10-05,Grocery Store,54.0,debit,Groceries,Platinum Card,London,Debit Card,2025-10,2025,5,0.0,54.0,8055288ba297784bbf0378772d01582ad499cbb595658adb9b5741e9d7dc642e
+2025-10-12,Grocery Store,82.0,debit,Groceries,Platinum Card,London,Debit Card,2025-10,2025,12,0.0,82.0,f4972ccdde5afac1e759f2d71c03d2ef3bd8155c71d96136dc6e3ccfbb687f4a
+2025-10-19,Grocery Store,65.0,debit,Groceries,Platinum Card,London,Debit Card,2025-10,2025,19,0.0,65.0,e3219bb3d32262b7da6ba92b041ea25f0c56d8d84213df750dc33c763bfc89a0
+2025-10-26,Grocery Store,67.0,debit,Groceries,Platinum Card,London,Debit Card,2025-10,2025,26,0.0,67.0,bf6a8856c10d2cc9bc3882eee5fde270ff979b4a6f2cec5105a2ddb4d3b40bea
+2025-10-11,American Tavern,51.0,debit,Restaurants,Silver Card,London,Credit Card,2025-10,2025,11,0.0,51.0,13e4874f071b5d70cf278d9604df8850f9bdc32f926ce3592653a8d0582518ae
+2025-10-23,Thai Restaurant,28.0,debit,Restaurants,Silver Card,London,Credit Card,2025-10,2025,23,0.0,28.0,7a276daf02beefdc23b00a92b6fac170dc0cfb28fc7392cf18c1764659486423
+2025-10-14,Coffee Shop,17.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-10,2025,14,0.0,17.0,9499dc0b21cede7db87781db78401d9a7deb99bb9867c1e429dee58d1980dd20
+2025-10-28,Burger Shop,20.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-10,2025,28,0.0,20.0,b03a0019ff7547b1015f87a3dc36bb8ed182a1556141dbb76775b3ba94f708c5
+2025-10-13,Shell,59.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-10,2025,13,0.0,59.0,0e9cad8be5ab65bab10546f29c3f357f31cd4268c1fb292c12bb2d1766abfe71
+2025-10-27,Shell,47.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-10,2025,27,0.0,47.0,8de0c05485bbd3aa5249984188c33b215aa7423cc5d74ec2c135c743c0d46abf
+2025-10-16,Amazon,64.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-10,2025,16,0.0,64.0,62f541b6020de049736bd520bf48b69fffab1c8ac05f394a03fe6883fe4990b2
+2025-10-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-10,2025,21,0.0,28.0,a594b01247f51fab15bc1efb29dd97f6e7620291d591c459b0d2a7fd1917f181
+2025-10-24,Cinema,21.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-10,2025,24,0.0,21.0,11bdd5312914820e617ce9691e92ad6ce9a1d7c403940095c7ef51b7908a60eb
+2025-11-01,Salary Payment,2274.0,credit,Salary,Checking,London,Bank Transfer,2025-11,2025,1,2274.0,0.0,917346f57800074bbf0e09953fd95dc319d7a42ea265877b607aecca23648d30
+2025-11-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-11,2025,2,0.0,950.0,5d25fc45f1fc48450058b6caa180f0d84e448d578e294c817a7a70bf74b986b9
+2025-11-03,Credit Card Payment,420.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-11,2025,3,0.0,420.0,9c0da163793c3233ae52119bdf8d4e151eaa5b1a718a93b09fc9794a73ee3da3
+2025-11-04,Gas Company,56.0,debit,Utilities,Checking,London,Direct Debit,2025-11,2025,4,0.0,56.0,1f5cf6b2139ab6d0b03109fc0f5b281546e9ff9d5a1289597bd33709a5be0a7a
+2025-11-05,Electric Company,82.0,debit,Utilities,Checking,London,Direct Debit,2025-11,2025,5,0.0,82.0,660a2d745b281edbaf60730cccf24197fb30ac1381f5c3260549979ce40d2f2a
+2025-11-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-11,2025,6,0.0,45.0,cd32cef16fb4fc1ea871052777d6a3ae87fe52534ffb93b33e007e616c765dd4
+2025-11-07,Phone Company,40.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-11,2025,7,0.0,40.0,d4ebb4ad2c1fae8199df98a11bd0b8105fe10dacfa20e98bf6cf5f6a5ab64433
+2025-11-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-11,2025,8,0.0,12.99,9fc9583d1ead247d7f298a3ffc9db9797253daf556ce3e6fb70c9c8d0d46b8bd
+2025-11-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-11,2025,9,0.0,10.99,d56ac71cc5db27747fcd20901c67b60f37015d3378f6993ae7c05a3e1faa7876
+2025-11-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-11,2025,10,0.0,76.0,720339327a1328fed79f37ce9917bd47cefd9cc8dca08df9344d6a58cc666a17
+2025-11-05,Grocery Store,79.0,debit,Groceries,Platinum Card,London,Debit Card,2025-11,2025,5,0.0,79.0,9020d19a5dad5b13f5d1fa269359a8c74de428fc085c907510608b0324b7e8d5
+2025-11-12,Grocery Store,53.0,debit,Groceries,Platinum Card,London,Debit Card,2025-11,2025,12,0.0,53.0,8a6d063a22407341339581a01d74094369b576fd51782b3d5201cbd967ce059b
+2025-11-19,Grocery Store,93.0,debit,Groceries,Platinum Card,London,Debit Card,2025-11,2025,19,0.0,93.0,dd5e3c001415d5e94d46f56b861a0d6243e6f43a4b5fef044f37601d116fe626
+2025-11-26,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-11,2025,26,0.0,91.0,fd0d2aad9618d1fc74e1eb525f0f2fb6eb6829f2de7aeb1eaafaa92e96c48cb5
+2025-11-11,American Tavern,26.0,debit,Restaurants,Silver Card,London,Credit Card,2025-11,2025,11,0.0,26.0,d2657bbe2d245f03e540c7ab558cdd879ad25bbcdfcd9a9ea0778c45b92c14e9
+2025-11-23,Thai Restaurant,45.0,debit,Restaurants,Silver Card,London,Credit Card,2025-11,2025,23,0.0,45.0,2a9cbf73d2a29921aa41af6edc0d124e9d9648ecb2eb866738b333d77a9b8269
+2025-11-14,Coffee Shop,13.0,debit,Fast Food,Silver Card,London,Debit Card,2025-11,2025,14,0.0,13.0,7858a5a3d672d80e82787f64c0f585e54fb84ef74fba8de7900666b4ece49380
+2025-11-28,Burger Shop,11.0,debit,Fast Food,Silver Card,London,Debit Card,2025-11,2025,28,0.0,11.0,66a908d142fc32b19863fc9b28b33a1607cf92f85f8eab04debdfdce594883f0
+2025-11-13,Shell,51.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-11,2025,13,0.0,51.0,48b5127a0be4ea378aba0d336bebd0fd09a960cd3276db7494dce7bb3d3982e4
+2025-11-27,Shell,48.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-11,2025,27,0.0,48.0,e903a1aa9bc907d305082e10099faffbaec026950d5517d2147e965d43e6ad8b
+2025-11-16,Amazon,57.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-11,2025,16,0.0,57.0,269a25b18ec617ca59c747c53c38f326a0877000fb7c419fb7e20872f1f497e3
+2025-11-18,Hardware Store,143.0,debit,Home Improvement,Silver Card,London,Debit Card,2025-11,2025,18,0.0,143.0,9ae4b2e4a77f382657526d1d31e0e735562e577d7979c6a031bfa85bf2bbbb44
+2025-11-20,Pharmacy,29.0,debit,Healthcare,Checking,London,Debit Card,2025-11,2025,20,0.0,29.0,6f34f258c328d093eb10ce113252bceb84803b4e18d4d7b3aad09efb2ccf6ad6
+2025-11-24,Cinema,26.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-11,2025,24,0.0,26.0,0b7c2c0881680efe6edae12c791654d3b279aa73f072f6992068fd05fa492bde
+2025-12-01,Salary Payment,2368.0,credit,Salary,Checking,London,Bank Transfer,2025-12,2025,1,2368.0,0.0,3c805f2ce7356be3d218288421e841769bc23f9d4fcb1ee33d8f7090ff56b165
+2025-12-02,Mortgage Payment,950.0,debit,Mortgage & Rent,Checking,London,Direct Debit,2025-12,2025,2,0.0,950.0,47a00d00f818cbbe6bae599b7e6c810400d5c8759385de6536cd4682f93837b7
+2025-12-03,Credit Card Payment,373.0,debit,Credit Card Payment,Checking,Online,Bank Transfer,2025-12,2025,3,0.0,373.0,26ac0ef2720a20379602508debd1460996cdbdd15b668208e409f455a9fb4e9f
+2025-12-04,Gas Company,47.0,debit,Utilities,Checking,London,Direct Debit,2025-12,2025,4,0.0,47.0,e564a931278a785b853727f97bd77a43ae13e4f389b63c877a16ef9fece19aaf
+2025-12-05,Electric Company,83.0,debit,Utilities,Checking,London,Direct Debit,2025-12,2025,5,0.0,83.0,3b271383e26e478cabc95a09b84b2259f1d07847258d5da7aa2ce559f5e41068
+2025-12-06,Internet Provider,45.0,debit,Internet,Checking,Online,Direct Debit,2025-12,2025,6,0.0,45.0,c7d8d2900651d67192fdcf18b38dac1f8c5c0d46b48a19462d4d0b7a9ea544c3
+2025-12-07,Phone Company,42.0,debit,Mobile Phone,Checking,Online,Direct Debit,2025-12,2025,7,0.0,42.0,656c45903890bbd43e40dda277df93296e36036f5fc91bf865776bc60a695b6f
+2025-12-08,Netflix,12.99,debit,Movies & Dvds,Platinum Card,Online,Credit Card,2025-12,2025,8,0.0,12.99,40fcad8ff4ebaeaeac3f8482c20d2126751df22c81fc6f31b1c66840c8b76350
+2025-12-09,Spotify,10.99,debit,Music,Platinum Card,Online,Credit Card,2025-12,2025,9,0.0,10.99,d71454d9c2e1107fcdce937a472c5b8c4c0c3855529f0998ca23aaf45b4d927d
+2025-12-10,Auto Insurance,76.0,debit,Auto Insurance,Checking,Online,Direct Debit,2025-12,2025,10,0.0,76.0,acbaadcad3189ec2bedbb4708dc95b553711ccaf470c087d94895f673228f360
+2025-12-05,Grocery Store,56.0,debit,Groceries,Platinum Card,London,Debit Card,2025-12,2025,5,0.0,56.0,56ee1bf2806329573d2c58a615f2116266f8e45b2686e685e9a8d7a5faed4a45
+2025-12-12,Grocery Store,53.0,debit,Groceries,Platinum Card,London,Debit Card,2025-12,2025,12,0.0,53.0,aaa05c08295445a56b7b54e870a2d1b02d1303fb242081868602eb99185bb3ae
+2025-12-19,Grocery Store,91.0,debit,Groceries,Platinum Card,London,Debit Card,2025-12,2025,19,0.0,91.0,b094ad853f1c8d1c23ef436bd39cc7221e543a8c87a1b574779da9c4a395c99a
+2025-12-26,Grocery Store,84.0,debit,Groceries,Platinum Card,London,Debit Card,2025-12,2025,26,0.0,84.0,6c53a424dfd90460e8c0a75084af2609a2868d1962b7781aab39c2246e4bd0d9
+2025-12-11,Thai Restaurant,25.0,debit,Restaurants,Silver Card,London,Credit Card,2025-12,2025,11,0.0,25.0,2d484965059f819e1d85b691cc8597cac141281d974244c0bc4d4d28aff13952
+2025-12-23,Thai Restaurant,30.0,debit,Restaurants,Silver Card,London,Credit Card,2025-12,2025,23,0.0,30.0,b031ca076caeab8e526ae1ddd46ff56e587b6541b89d301c10f59cf656ac861e
+2025-12-14,Sandwich Bar,15.0,debit,Coffee Shops,Silver Card,London,Debit Card,2025-12,2025,14,0.0,15.0,f1a9d925d156838b0bfaa15a563ef0a7af4e29aa6c086089f739fe2bfbb98306
+2025-12-28,Burger Shop,14.0,debit,Fast Food,Silver Card,London,Debit Card,2025-12,2025,28,0.0,14.0,b6cfba3348205a1e163abaef7824dba9cda18088b652fc9ed5c24473fbc973f0
+2025-12-13,Shell,39.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-12,2025,13,0.0,39.0,10e8910ea9224bee3006484b3676f146f831f87f8b9e64f2fa5d6d90403b9dff
+2025-12-27,Shell,46.0,debit,Gas & Fuel,Platinum Card,London,Credit Card,2025-12,2025,27,0.0,46.0,70389ebf56e8189722b858dd229fde279d02f44c898234584c51bb0b8c6601aa
+2025-12-16,Amazon,40.0,debit,Shopping,Platinum Card,Online,Credit Card,2025-12,2025,16,0.0,40.0,60de09bc6018607f08fe9dc68cfcf950dc1ecebcbaed583dfb63fed373addf31
+2025-12-21,Haircut,28.0,debit,Haircut,Silver Card,London,Debit Card,2025-12,2025,21,0.0,28.0,dcd7b5cbc1d64a6f681ce996e42ede7b9669737d419109f53a1ac7af8903bfaa
+2025-12-24,Cinema,30.0,debit,Entertainment,Platinum Card,London,Credit Card,2025-12,2025,24,0.0,30.0,a9b5af3ed001e32db3c50ded931d5fdfc1bd47a184be73ebd3d4650ef6f48073
+2025-12-25,Weekend Travel Booking,327.0,debit,Travel,Platinum Card,Online,Credit Card,2025-12,2025,25,0.0,327.0,e5699bc1f3c2b6e1d67de8f0988e253393c838f9784005a1235b996a805b981b
