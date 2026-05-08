@@ -13,7 +13,9 @@ def create_transaction_hash(row) -> str:
         + str(row["amount"])
         + str(row["transaction_type"])
         + str(row["category"])
-        + str(row["account_name"])
+        + str(row.get("account_name", "Unknown"))
+        + str(row.get("location", "Unknown"))
+        + str(row.get("payment_method", "Unknown"))
     )
 
     return hashlib.sha256(transaction_string.encode()).hexdigest()

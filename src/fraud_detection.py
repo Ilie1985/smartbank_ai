@@ -4,7 +4,8 @@ from sklearn.ensemble import IsolationForest
 
 def detect_unusual_transactions(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Detect unusually large transactions using Isolation Forest.
+    Detect unusual transactions using amount-based anomaly detection
+    and simple rule-based checks for location and payment method.
     """
 
     data = df.copy()
@@ -46,7 +47,13 @@ def assign_risk_reason(row):
     if row["risk_status"] == "Suspicious":
         if row["expense"] > 1000:
             return "Very high transaction amount"
-        else:
-            return "Unusual amount compared with normal spending"
+
+        if row.get("location", "Unknown") not in ["Unknown", "Online"]:
+            return "Unusual transaction pattern with location information"
+
+        if row.get("payment_method", "Unknown") not in ["Unknown"]:
+            return "Unusual transaction pattern with payment method information"
+
+        return "Unusual amount compared with normal spending"
 
     return "No issue detected"
