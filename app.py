@@ -61,6 +61,41 @@ TRANSACTION_DISPLAY_COLUMNS = [
 ]
 
 
+def prepare_for_display(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Prepare dataframe safely before showing it in Streamlit.
+
+    This prevents pyarrow errors caused by mixed date/object types.
+    """
+
+    data = df.copy()
+
+    for column in data.columns:
+        if column == "date":
+            data[column] = pd.to_datetime(data[column], errors="coerce")
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+
+        elif pd.api.types.is_datetime64_any_dtype(data[column]):
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+
+        elif data[column].dtype == "object":
+            data[column] = data[column].apply(
+                lambda value: str(value) if value is not None else ""
+            )
+
+    return data
+
+
+def safe_dataframe(df: pd.DataFrame, *args, **kwargs):
+    """
+    Display a dataframe safely in Streamlit.
+    Always use this instead of safe_dataframe().
+    """
+
+    safe_df = prepare_for_display(df)
+    st.dataframe(safe_df, *args, **kwargs)
+
+
 def save_raw_file(uploaded_file, prefix):
     """
     Save uploaded CSV files to data/raw.
@@ -168,7 +203,7 @@ def data_input_page():
 
     elif input_method == "Enter Budget Manually":
         manual_budget_entry_section()
-    
+
     elif input_method == "View or Edit Manual Transactions":
         edit_manual_transactions_section()
 
@@ -204,10 +239,10 @@ def upload_data_page():
         budget_df = pd.read_csv(budget_file)
 
         st.subheader("Raw Transactions Preview")
-        st.dataframe(transactions_df.head())
+        safe_dataframe(transactions_df.head())
 
         st.subheader("Raw Budget Preview")
-        st.dataframe(budget_df.head())
+        safe_dataframe(budget_df.head())
 
         if not check_empty_data(transactions_df):
             st.error("The transactions file is empty.")
@@ -260,10 +295,10 @@ def upload_data_page():
         st.write(f"Budget raw file saved to: {budget_path}")
 
         st.subheader("Cleaned Transactions Preview")
-        st.dataframe(cleaned_transactions.head())
+        safe_dataframe(cleaned_transactions.head())
 
         st.subheader("Cleaned Budget Preview")
-        st.dataframe(cleaned_budget.head())
+        safe_dataframe(cleaned_budget.head())
 
 
 def flexible_csv_upload_section():
@@ -284,7 +319,7 @@ def flexible_csv_upload_section():
         raw_df = pd.read_csv(uploaded_file)
 
         st.write("Uploaded Data Preview")
-        st.dataframe(raw_df.head())
+        safe_dataframe(raw_df.head())
 
         available_columns = ["Not Available"] + list(raw_df.columns)
 
@@ -375,7 +410,7 @@ def flexible_csv_upload_section():
             )
 
             st.write("Cleaned Data Preview")
-            st.dataframe(cleaned_df.head())
+            safe_dataframe(cleaned_df.head())
 
             st.info(
                 "This option updates the transactions table only. "
@@ -386,6 +421,12 @@ def flexible_csv_upload_section():
 
 def manual_transaction_entry_section():
     st.subheader("Enter Transaction Manually")
+
+    st.info(
+        "Tip: Choose a category that matches your budget category. "
+        "For example, if your budget category is 'Food And Treats', "
+        "use the same category for related transactions."
+    )
 
     st.write(
         "Use this form if you do not have a CSV file. "
@@ -402,10 +443,18 @@ def manual_transaction_entry_section():
             ["debit", "credit"],
         )
 
-        category = st.text_input(
-            "Category",
-            value="Other",
-        )
+        try:
+            existing_budget = load_budget()
+            budget_categories = sorted(
+                existing_budget["category"].dropna().unique().tolist()
+            )
+        except Exception:
+            budget_categories = []
+
+        if budget_categories:
+            category = st.selectbox("Category", budget_categories + ["Other"])
+        else:
+            category = st.text_input("Category", value="Other")
 
         account_name = st.text_input(
             "Account Name",
@@ -456,7 +505,8 @@ def manual_transaction_entry_section():
 
             st.success("Transaction added successfully.")
             st.subheader("Latest Transactions")
-            st.dataframe(updated_transactions.tail())
+            safe_dataframe(updated_transactions.tail())
+
 
 def edit_manual_transactions_section():
     st.subheader("View or Edit Manual Transactions")
@@ -468,10 +518,12 @@ def edit_manual_transactions_section():
         return
 
     st.write("Saved Manual Transactions")
-    st.dataframe(manual_transactions)
+    safe_dataframe(manual_transactions)
 
     if "manual_id" not in manual_transactions.columns:
-        st.warning("Manual transaction IDs were not found. Add a new manual transaction first.")
+        st.warning(
+            "Manual transaction IDs were not found. Add a new manual transaction first."
+        )
         return
 
     selected_id = st.selectbox(
@@ -484,47 +536,43 @@ def edit_manual_transactions_section():
     ].iloc[0]
 
     with st.form("edit_manual_transaction_form"):
-        date = st.text_input(
-            "Date",
-            value=str(selected_row.get("date", ""))
-        )
+        date = st.text_input("Date", value=str(selected_row.get("date", "")))
 
         description = st.text_input(
-            "Description",
-            value=str(selected_row.get("description", ""))
+            "Description", value=str(selected_row.get("description", ""))
         )
 
         amount = st.number_input(
             "Amount",
             min_value=0.0,
             step=0.01,
-            value=float(selected_row.get("amount", 0))
+            value=float(selected_row.get("amount", 0)),
         )
 
         transaction_type = st.selectbox(
             "Transaction Type",
             ["debit", "credit"],
-            index=0 if str(selected_row.get("transaction_type", "debit")) == "debit" else 1
+            index=(
+                0
+                if str(selected_row.get("transaction_type", "debit")) == "debit"
+                else 1
+            ),
         )
 
         category = st.text_input(
-            "Category",
-            value=str(selected_row.get("category", "Other"))
+            "Category", value=str(selected_row.get("category", "Other"))
         )
 
         account_name = st.text_input(
-            "Account Name",
-            value=str(selected_row.get("account_name", "Main Account"))
+            "Account Name", value=str(selected_row.get("account_name", "Main Account"))
         )
 
         location = st.text_input(
-            "Location",
-            value=str(selected_row.get("location", "Unknown"))
+            "Location", value=str(selected_row.get("location", "Unknown"))
         )
 
         payment_method = st.text_input(
-            "Payment Method",
-            value=str(selected_row.get("payment_method", "Other"))
+            "Payment Method", value=str(selected_row.get("payment_method", "Other"))
         )
 
         update_button = st.form_submit_button("Update Transaction")
@@ -563,28 +611,25 @@ def edit_manual_budget_section():
         return
 
     st.write("Saved Manual Budget")
-    st.dataframe(manual_budget)
+    safe_dataframe(manual_budget)
 
     selected_category = st.selectbox(
         "Select a budget category to edit or delete",
         manual_budget["category"].tolist(),
     )
 
-    selected_row = manual_budget[
-        manual_budget["category"] == selected_category
-    ].iloc[0]
+    selected_row = manual_budget[manual_budget["category"] == selected_category].iloc[0]
 
     with st.form("edit_manual_budget_form"):
         category = st.text_input(
-            "Category",
-            value=str(selected_row.get("category", ""))
+            "Category", value=str(selected_row.get("category", ""))
         )
 
         budget = st.number_input(
             "Budget",
             min_value=0.0,
             step=1.0,
-            value=float(selected_row.get("budget", 0))
+            value=float(selected_row.get("budget", 0)),
         )
 
         update_button = st.form_submit_button("Update Budget Category")
@@ -600,6 +645,7 @@ def edit_manual_budget_section():
 
         st.success("Manual budget category deleted successfully.")
         st.rerun()
+
 
 def manual_budget_entry_section():
     st.subheader("Enter Budget Manually")
@@ -623,7 +669,7 @@ def manual_budget_entry_section():
             updated_budget = add_manual_budget(category, budget)
 
             st.success("Budget category added successfully.")
-            st.dataframe(updated_budget)
+            safe_dataframe(updated_budget)
 
 
 def data_quality_page():
@@ -643,7 +689,7 @@ def data_quality_page():
         st.write("Missing Values")
         missing_transactions = transactions.isnull().sum().reset_index()
         missing_transactions.columns = ["Column", "Missing Values"]
-        st.dataframe(missing_transactions)
+        safe_dataframe(missing_transactions)
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -662,7 +708,7 @@ def data_quality_page():
         st.write("Missing Values")
         missing_budget = budget.isnull().sum().reset_index()
         missing_budget.columns = ["Column", "Missing Values"]
-        st.dataframe(missing_budget)
+        safe_dataframe(missing_budget)
 
     except Exception:
         st.info("No budget data found yet. Add a budget manually or upload Budget.csv.")
@@ -696,7 +742,7 @@ def dashboard_page():
                 title="Spending by Category",
             )
 
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         st.subheader("Monthly Spending Trend")
 
@@ -713,7 +759,7 @@ def dashboard_page():
                 title="Monthly Spending",
             )
 
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, width="stretch")
 
         st.subheader("Monthly Income Trend")
 
@@ -730,7 +776,7 @@ def dashboard_page():
                 title="Monthly Income",
             )
 
-            st.plotly_chart(fig3, use_container_width=True)
+            st.plotly_chart(fig3, width="stretch")
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -743,7 +789,36 @@ def budget_tracker_page():
         transactions = load_transactions()
         budget = load_budget()
 
-        comparison = compare_budget_to_actual(transactions, budget)
+        if transactions.empty:
+            st.warning("No transaction data found.")
+            return
+
+        if budget.empty:
+            st.warning(
+                "No budget data found. Please enter or upload budget categories first."
+            )
+            return
+
+        st.write(
+            "This page compares your actual spending against your budget. "
+            "Select a month to see how much you have spent and how much budget remains."
+        )
+
+        available_months = ["All"] + sorted(
+            transactions["month"].dropna().unique().tolist()
+        )
+
+        selected_month = st.selectbox(
+            "Select month for budget comparison", available_months
+        )
+
+        comparison = compare_budget_to_actual(
+            transactions, budget, selected_month=selected_month
+        )
+
+        total_budget = comparison["budget"].sum()
+        total_spent = comparison["actual_spending"].sum()
+        total_remaining = total_budget - total_spent
 
         over_budget_count = len(
             comparison[comparison["budget_status"] == "Over Budget"]
@@ -757,14 +832,39 @@ def budget_tracker_page():
 
         col1, col2, col3 = st.columns(3)
 
-        col1.metric("Over Budget", over_budget_count)
-        col2.metric("Close to Limit", close_to_limit_count)
-        col3.metric("Within Budget", within_budget_count)
+        col1.metric("Total Budget", f"£{total_budget:,.2f}")
+        col2.metric("Actual Spending", f"£{total_spent:,.2f}")
+        col3.metric("Remaining Budget", f"£{total_remaining:,.2f}")
+
+        col4, col5, col6 = st.columns(3)
+
+        col4.metric("Over Budget", over_budget_count)
+        col5.metric("Close to Limit", close_to_limit_count)
+        col6.metric("Within Budget", within_budget_count)
+
+        if total_remaining < 0:
+            st.error(f"You are over your total budget by £{abs(total_remaining):,.2f}.")
+        else:
+            st.success(
+                f"You still have £{total_remaining:,.2f} remaining in your budget."
+            )
 
         st.subheader("Budget Comparison Table")
 
-        st.dataframe(
-            comparison[
+        display_comparison = comparison.copy()
+        display_comparison["budget"] = display_comparison["budget"].round(2)
+        display_comparison["actual_spending"] = display_comparison[
+            "actual_spending"
+        ].round(2)
+        display_comparison["remaining_budget"] = display_comparison[
+            "remaining_budget"
+        ].round(2)
+        display_comparison["percentage_used"] = display_comparison[
+            "percentage_used"
+        ].round(2)
+
+        safe_dataframe(
+            display_comparison[
                 [
                     "category",
                     "budget",
@@ -773,7 +873,8 @@ def budget_tracker_page():
                     "percentage_used",
                     "budget_status",
                 ]
-            ]
+            ],
+            width="stretch",
         )
 
         st.subheader("Actual Spending vs Budget")
@@ -786,13 +887,25 @@ def budget_tracker_page():
             title="Budget vs Actual Spending",
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
-    except Exception:
+        st.subheader("Remaining Budget by Category")
+
+        fig2 = px.bar(
+            comparison,
+            x="category",
+            y="remaining_budget",
+            title="Remaining Budget by Category",
+        )
+
+        st.plotly_chart(fig2, width="stretch")
+
+    except Exception as error:
         st.warning(
             "Please add both transaction data and budget data first. "
-            "You can upload files or enter budget categories manually."
+            "You can upload files or enter data manually."
         )
+        st.write(error)
 
 
 def account_analysis_page():
@@ -819,7 +932,7 @@ def account_analysis_page():
                 title="Spending by Account or Card",
             )
 
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         accounts = ["All"] + sorted(
             transactions["account_name"].dropna().unique().tolist()
@@ -836,7 +949,7 @@ def account_analysis_page():
             filtered_df = filtered_df[filtered_df["account_name"] == selected_account]
 
         st.subheader("Transactions for Selected Account")
-        st.dataframe(filtered_df[get_available_display_columns(filtered_df)])
+        safe_dataframe(filtered_df[get_available_display_columns(filtered_df)])
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -864,7 +977,7 @@ def spending_analysis_page():
 
         st.subheader("Filtered Transactions")
 
-        st.dataframe(filtered_df[get_available_display_columns(filtered_df)])
+        safe_dataframe(filtered_df[get_available_display_columns(filtered_df)])
 
         st.subheader("Top Descriptions by Spending")
 
@@ -880,7 +993,7 @@ def spending_analysis_page():
                 title="Top Spending Descriptions",
             )
 
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         st.subheader("Yearly Summary")
 
@@ -897,7 +1010,7 @@ def spending_analysis_page():
                 title="Yearly Income vs Expense",
             )
 
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, width="stretch")
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -923,7 +1036,7 @@ def prediction_page():
             )
 
             st.subheader("Current Monthly Spending Data")
-            st.dataframe(monthly_check)
+            safe_dataframe(monthly_check)
 
             if not monthly_check.empty:
                 fig = px.line(
@@ -934,7 +1047,7 @@ def prediction_page():
                     title="Current Monthly Spending",
                 )
 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
             return
 
@@ -957,7 +1070,7 @@ def prediction_page():
             )
 
         st.subheader("Monthly Data Used by the Model")
-        st.dataframe(monthly)
+        safe_dataframe(monthly)
 
         fig = px.line(
             monthly,
@@ -967,7 +1080,7 @@ def prediction_page():
             title="Actual vs Predicted Monthly Spending",
         )
 
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -995,13 +1108,13 @@ def unusual_transactions_page():
                 "Some transactions are unusually high compared with normal spending."
             )
 
-            st.dataframe(suspicious[risk_columns])
+            safe_dataframe(suspicious[risk_columns])
         else:
             st.success("No unusual transactions detected.")
 
         st.subheader("All Transactions with Risk Status")
 
-        st.dataframe(risk_df[risk_columns])
+        safe_dataframe(risk_df[risk_columns])
 
     except Exception:
         st.warning("Please add or upload transaction data first.")
@@ -1041,7 +1154,7 @@ def blockchain_audit_page():
             extra_columns=["transaction_hash", "hash_valid"],
         )
 
-        st.dataframe(transactions[audit_columns])
+        safe_dataframe(transactions[audit_columns])
 
     except Exception:
         st.warning("Please add or upload transaction data first.")

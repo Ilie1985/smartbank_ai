@@ -1,6 +1,7 @@
 import sqlite3
-import pandas as pd
 from pathlib import Path
+
+import pandas as pd
 
 
 DB_PATH = "database/banking.db"
@@ -18,20 +19,25 @@ def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
     """
     Prepare a DataFrame before saving it to SQLite.
 
-    SQLite can sometimes fail when saving Python date, datetime,
-    Timestamp, or complex object values. This function converts them
-    into safe text or numeric values.
+    This converts date, datetime, Timestamp, and object values into SQLite-safe values.
     """
 
     data = df.copy()
 
     for column in data.columns:
-        # Convert datetime columns to string
+        # Handle common date column
+        if column == "date":
+            data[column] = pd.to_datetime(data[column], errors="coerce")
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+            continue
+
+        # Convert datetime columns to text
         if pd.api.types.is_datetime64_any_dtype(data[column]):
-            data[column] = data[column].astype(str)
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+            continue
 
         # Convert object columns safely
-        elif data[column].dtype == "object":
+        if data[column].dtype == "object":
             data[column] = data[column].apply(
                 lambda value: str(value) if value is not None else ""
             )
@@ -54,7 +60,7 @@ def save_to_database(df: pd.DataFrame, table_name: str) -> None:
         table_name,
         conn,
         if_exists="replace",
-        index=False
+        index=False,
     )
 
     conn.close()
@@ -69,10 +75,14 @@ def load_table(table_name: str) -> pd.DataFrame:
 
     df = pd.read_sql_query(
         f"SELECT * FROM {table_name}",
-        conn
+        conn,
     )
 
     conn.close()
+
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df["date"] = df["date"].dt.strftime("%Y-%m-%d")
 
     return df
 

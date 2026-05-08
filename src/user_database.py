@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 USER_DB_PATH = "database/user_inputs.db"
 
 
@@ -24,10 +23,16 @@ def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
     data = df.copy()
 
     for column in data.columns:
-        if pd.api.types.is_datetime64_any_dtype(data[column]):
-            data[column] = data[column].astype(str)
+        if column == "date":
+            data[column] = pd.to_datetime(data[column], errors="coerce")
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+            continue
 
-        elif data[column].dtype == "object":
+        if pd.api.types.is_datetime64_any_dtype(data[column]):
+            data[column] = data[column].dt.strftime("%Y-%m-%d")
+            continue
+
+        if data[column].dtype == "object":
             data[column] = data[column].apply(
                 lambda value: str(value) if value is not None else ""
             )
@@ -45,14 +50,15 @@ def load_user_transactions() -> pd.DataFrame:
     conn = sqlite3.connect(USER_DB_PATH)
 
     try:
-        df = pd.read_sql_query(
-            "SELECT * FROM manual_transactions",
-            conn
-        )
+        df = pd.read_sql_query("SELECT * FROM manual_transactions", conn)
     except Exception:
         df = pd.DataFrame()
 
     conn.close()
+
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+        df["date"] = df["date"].dt.strftime("%Y-%m-%d")
 
     return df
 
@@ -68,12 +74,7 @@ def save_user_transactions(df: pd.DataFrame) -> None:
 
     conn = sqlite3.connect(USER_DB_PATH)
 
-    safe_df.to_sql(
-        "manual_transactions",
-        conn,
-        if_exists="replace",
-        index=False
-    )
+    safe_df.to_sql("manual_transactions", conn, if_exists="replace", index=False)
 
     conn.close()
 
@@ -93,10 +94,7 @@ def add_user_transaction(transaction_df: pd.DataFrame) -> pd.DataFrame:
     if existing.empty:
         updated = data
     else:
-        updated = pd.concat(
-            [existing, data],
-            ignore_index=True
-        )
+        updated = pd.concat([existing, data], ignore_index=True)
 
     save_user_transactions(updated)
 
@@ -149,10 +147,7 @@ def load_user_budget() -> pd.DataFrame:
     conn = sqlite3.connect(USER_DB_PATH)
 
     try:
-        df = pd.read_sql_query(
-            "SELECT * FROM manual_budget",
-            conn
-        )
+        df = pd.read_sql_query("SELECT * FROM manual_budget", conn)
     except Exception:
         df = pd.DataFrame()
 
@@ -172,12 +167,7 @@ def save_user_budget(df: pd.DataFrame) -> None:
 
     conn = sqlite3.connect(USER_DB_PATH)
 
-    safe_df.to_sql(
-        "manual_budget",
-        conn,
-        if_exists="replace",
-        index=False
-    )
+    safe_df.to_sql("manual_budget", conn, if_exists="replace", index=False)
 
     conn.close()
 
@@ -190,12 +180,7 @@ def add_or_update_user_budget(category: str, budget: float) -> pd.DataFrame:
     existing = load_user_budget()
 
     new_row = pd.DataFrame(
-        [
-            {
-                "category": str(category).strip().title(),
-                "budget": float(budget)
-            }
-        ]
+        [{"category": str(category).strip().title(), "budget": float(budget)}]
     )
 
     if existing.empty:
@@ -205,10 +190,7 @@ def add_or_update_user_budget(category: str, budget: float) -> pd.DataFrame:
 
         existing = existing[existing["category"] != str(category).strip().title()]
 
-        updated = pd.concat(
-            [existing, new_row],
-            ignore_index=True
-        )
+        updated = pd.concat([existing, new_row], ignore_index=True)
 
     save_user_budget(updated)
 

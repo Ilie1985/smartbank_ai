@@ -9,6 +9,9 @@ def generate_financial_insights(transactions_df: pd.DataFrame, budget_df: pd.Dat
 
     insights = []
 
+    if transactions_df.empty:
+        return ["No transaction data available yet. Add transactions to generate insights."]
+
     total_income = transactions_df["income"].sum()
     total_expense = transactions_df["expense"].sum()
 
@@ -61,7 +64,22 @@ def generate_financial_insights(transactions_df: pd.DataFrame, budget_df: pd.Dat
                 "Your spending stayed the same compared with the previous month."
             )
 
-    budget_comparison = compare_budget_to_actual(transactions_df, budget_df)
+    if budget_df.empty:
+        insights.append(
+            "No budget data is available yet. Add budget categories to receive budget-based insights."
+        )
+        return insights
+
+    latest_month = None
+
+    if "month" in transactions_df.columns and not transactions_df["month"].dropna().empty:
+        latest_month = sorted(transactions_df["month"].dropna().unique().tolist())[-1]
+
+    budget_comparison = compare_budget_to_actual(
+        transactions_df,
+        budget_df,
+        selected_month=latest_month
+    )
 
     over_budget = budget_comparison[budget_comparison["budget_status"] == "Over Budget"]
 
@@ -70,11 +88,11 @@ def generate_financial_insights(transactions_df: pd.DataFrame, budget_df: pd.Dat
         overspend = abs(over_budget.iloc[0]["remaining_budget"])
 
         insights.append(
-            f"You are over budget in {worst_category} by £{overspend:,.2f}."
+            f"For {latest_month}, you are over budget in {worst_category} by £{overspend:,.2f}."
         )
     else:
         insights.append(
-            "You are currently within budget across your planned categories."
+            f"For {latest_month}, you are currently within budget across your planned categories."
         )
 
     return insights
