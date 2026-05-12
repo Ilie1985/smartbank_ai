@@ -9,8 +9,9 @@ from src.blockchain_audit import add_transaction_hashes
 from src.database import save_to_database, load_transactions, load_budget
 
 
-transactions_df = extract_csv("data/personal_transactions.csv")
-budget_df = extract_csv("data/Budget.csv")
+transactions_df = extract_csv("data/raw/personal_transactions.csv")
+budget_df = extract_csv("data/raw/Budget.csv")
+
 
 print("Transactions not empty:", check_empty_data(transactions_df))
 print("Budget not empty:", check_empty_data(budget_df))

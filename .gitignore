@@ -1,11 +1,26 @@
+# Virtual environment
 venv/
+
+# Python cache files
 __pycache__/
 *.pyc
+.pytest_cache/
+
+# Local databases
 database/*.db
+
+# Trained/generated ML models
 models/*.pkl
-data/raw_data/
-data/cleaned_data/
-data/Budget.csv
-data/personal_transactions.csv
+
+# Raw/private uploaded data
+data/raw/
+
+# Cleaned/generated data
+data/cleaned/
+
+# Environment variables
 .env
+
+# Operating system files
 .DS_Store
+Thumbs.db
