@@ -11,6 +11,8 @@ TRANSACTION_DISPLAY_COLUMNS = [
     "account_name",
     "location",
     "payment_method",
+    "data_source",
+    "manual_id",
 ]
 
 

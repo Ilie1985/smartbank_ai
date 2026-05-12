@@ -9,8 +9,10 @@ def save_raw_file(uploaded_file, prefix):
 
     os.makedirs("data/raw", exist_ok=True)
 
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    file_path = f"data/raw/{prefix}_{timestamp}.csv"
+    # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    # file_path = f"data/raw/{prefix}_{timestamp}.csv"
+
+    file_path = f"data/raw/{prefix}_latest.csv"
 
     with open(file_path, "wb") as file:
         file.write(uploaded_file.getbuffer())

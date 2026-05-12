@@ -4,7 +4,8 @@ from pathlib import Path
 import pandas as pd
 
 
-DB_PATH = "database/banking.db"
+UPLOADED_TRANSACTIONS_DB_PATH = "database/uploaded_transactions.db"
+UPLOADED_BUDGET_DB_PATH = "database/uploaded_budget.db"
 
 
 def create_database_folder():
@@ -18,25 +19,20 @@ def create_database_folder():
 def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
     """
     Prepare a DataFrame before saving it to SQLite.
-
-    This converts date, datetime, Timestamp, and object values into SQLite-safe values.
     """
 
     data = df.copy()
 
     for column in data.columns:
-        # Handle common date column
         if column == "date":
             data[column] = pd.to_datetime(data[column], errors="coerce")
             data[column] = data[column].dt.strftime("%Y-%m-%d")
             continue
 
-        # Convert datetime columns to text
         if pd.api.types.is_datetime64_any_dtype(data[column]):
             data[column] = data[column].dt.strftime("%Y-%m-%d")
             continue
 
-        # Convert object columns safely
         if data[column].dtype == "object":
             data[column] = data[column].apply(
                 lambda value: str(value) if value is not None else ""
@@ -47,14 +43,21 @@ def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
 
 def save_to_database(df: pd.DataFrame, table_name: str) -> None:
     """
-    Save a DataFrame into SQLite.
+    Save uploaded CSV data into the correct SQLite database.
     """
 
     create_database_folder()
 
     safe_df = prepare_dataframe_for_sqlite(df)
 
-    conn = sqlite3.connect(DB_PATH)
+    if table_name == "transactions":
+        db_path = UPLOADED_TRANSACTIONS_DB_PATH
+    elif table_name == "budget":
+        db_path = UPLOADED_BUDGET_DB_PATH
+    else:
+        raise ValueError(f"Unknown table name: {table_name}")
+
+    conn = sqlite3.connect(db_path)
 
     safe_df.to_sql(
         table_name,
@@ -66,12 +69,12 @@ def save_to_database(df: pd.DataFrame, table_name: str) -> None:
     conn.close()
 
 
-def load_table(table_name: str) -> pd.DataFrame:
+def load_table(db_path: str, table_name: str) -> pd.DataFrame:
     """
     Load a table from SQLite.
     """
 
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(db_path)
 
     df = pd.read_sql_query(
         f"SELECT * FROM {table_name}",
@@ -89,15 +92,21 @@ def load_table(table_name: str) -> pd.DataFrame:
 
 def load_transactions() -> pd.DataFrame:
     """
-    Load transactions table.
+    Load uploaded CSV transactions.
     """
 
-    return load_table("transactions")
+    return load_table(
+        UPLOADED_TRANSACTIONS_DB_PATH,
+        "transactions",
+    )
 
 
 def load_budget() -> pd.DataFrame:
     """
-    Load budget table.
+    Load uploaded CSV budget.
     """
 
-    return load_table("budget")
+    return load_table(
+        UPLOADED_BUDGET_DB_PATH,
+        "budget",
+    )

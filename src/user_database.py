@@ -4,7 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
-USER_DB_PATH = "database/user_inputs.db"
+MANUAL_TRANSACTIONS_DB_PATH = "database/manual_transactions.db"
+MANUAL_BUDGET_DB_PATH = "database/manual_budget.db"
 
 
 def create_user_database_folder():
@@ -17,7 +18,7 @@ def create_user_database_folder():
 
 def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Convert date/object columns into SQLite-safe values.
+    Convert dataframe values into SQLite-safe values.
     """
 
     data = df.copy()
@@ -40,19 +41,48 @@ def prepare_dataframe_for_sqlite(df: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
-def load_user_transactions() -> pd.DataFrame:
+def table_exists(db_path: str, table_name: str) -> bool:
     """
-    Load manually entered transactions from user_inputs.db.
+    Check if a table exists in a database file.
     """
 
     create_user_database_folder()
 
-    conn = sqlite3.connect(USER_DB_PATH)
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-    try:
-        df = pd.read_sql_query("SELECT * FROM manual_transactions", conn)
-    except Exception:
-        df = pd.DataFrame()
+    cursor.execute(
+        """
+        SELECT name
+        FROM sqlite_master
+        WHERE type='table' AND name=?
+        """,
+        (table_name,),
+    )
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    return result is not None
+
+
+def load_user_transactions() -> pd.DataFrame:
+    """
+    Load manually entered transactions from manual_transactions.db.
+    """
+
+    create_user_database_folder()
+
+    if not table_exists(MANUAL_TRANSACTIONS_DB_PATH, "manual_transactions"):
+        return pd.DataFrame()
+
+    conn = sqlite3.connect(MANUAL_TRANSACTIONS_DB_PATH)
+
+    df = pd.read_sql_query(
+        "SELECT * FROM manual_transactions",
+        conn,
+    )
 
     conn.close()
 
@@ -65,23 +95,28 @@ def load_user_transactions() -> pd.DataFrame:
 
 def save_user_transactions(df: pd.DataFrame) -> None:
     """
-    Save manually entered transactions to user_inputs.db.
+    Save manually entered transactions to manual_transactions.db.
     """
 
     create_user_database_folder()
 
     safe_df = prepare_dataframe_for_sqlite(df)
 
-    conn = sqlite3.connect(USER_DB_PATH)
+    conn = sqlite3.connect(MANUAL_TRANSACTIONS_DB_PATH)
 
-    safe_df.to_sql("manual_transactions", conn, if_exists="replace", index=False)
+    safe_df.to_sql(
+        "manual_transactions",
+        conn,
+        if_exists="replace",
+        index=False,
+    )
 
     conn.close()
 
 
 def add_user_transaction(transaction_df: pd.DataFrame) -> pd.DataFrame:
     """
-    Add a cleaned manual transaction to the manual transactions table.
+    Add cleaned manual transactions to the manual_transactions table.
     """
 
     data = transaction_df.copy()
@@ -94,7 +129,11 @@ def add_user_transaction(transaction_df: pd.DataFrame) -> pd.DataFrame:
     if existing.empty:
         updated = data
     else:
-        updated = pd.concat([existing, data], ignore_index=True)
+        updated = pd.concat(
+            [existing, data],
+            ignore_index=True,
+            sort=False,
+        )
 
     save_user_transactions(updated)
 
@@ -139,17 +178,20 @@ def delete_user_transaction(manual_id: str) -> pd.DataFrame:
 
 def load_user_budget() -> pd.DataFrame:
     """
-    Load manually entered budget data.
+    Load manually entered budget data from manual_budget.db.
     """
 
     create_user_database_folder()
 
-    conn = sqlite3.connect(USER_DB_PATH)
+    if not table_exists(MANUAL_BUDGET_DB_PATH, "manual_budget"):
+        return pd.DataFrame()
 
-    try:
-        df = pd.read_sql_query("SELECT * FROM manual_budget", conn)
-    except Exception:
-        df = pd.DataFrame()
+    conn = sqlite3.connect(MANUAL_BUDGET_DB_PATH)
+
+    df = pd.read_sql_query(
+        "SELECT * FROM manual_budget",
+        conn,
+    )
 
     conn.close()
 
@@ -158,16 +200,21 @@ def load_user_budget() -> pd.DataFrame:
 
 def save_user_budget(df: pd.DataFrame) -> None:
     """
-    Save manually entered budget data.
+    Save manually entered budget data to manual_budget.db.
     """
 
     create_user_database_folder()
 
     safe_df = prepare_dataframe_for_sqlite(df)
 
-    conn = sqlite3.connect(USER_DB_PATH)
+    conn = sqlite3.connect(MANUAL_BUDGET_DB_PATH)
 
-    safe_df.to_sql("manual_budget", conn, if_exists="replace", index=False)
+    safe_df.to_sql(
+        "manual_budget",
+        conn,
+        if_exists="replace",
+        index=False,
+    )
 
     conn.close()
 
@@ -180,17 +227,25 @@ def add_or_update_user_budget(category: str, budget: float) -> pd.DataFrame:
     existing = load_user_budget()
 
     new_row = pd.DataFrame(
-        [{"category": str(category).strip().title(), "budget": float(budget)}]
+        [
+            {
+                "category": str(category).strip().title(),
+                "budget": float(budget),
+            }
+        ]
     )
 
     if existing.empty:
         updated = new_row
     else:
         existing["category"] = existing["category"].astype(str).str.strip().str.title()
-
         existing = existing[existing["category"] != str(category).strip().title()]
 
-        updated = pd.concat([existing, new_row], ignore_index=True)
+        updated = pd.concat(
+            [existing, new_row],
+            ignore_index=True,
+            sort=False,
+        )
 
     save_user_budget(updated)
 
@@ -214,3 +269,38 @@ def delete_user_budget(category: str) -> pd.DataFrame:
     save_user_budget(df)
 
     return df
+
+
+def list_user_tables() -> dict:
+    """
+    List tables from the manual transaction and manual budget databases.
+    Useful for debugging.
+    """
+
+    database_files = {
+        "manual_transactions_db": MANUAL_TRANSACTIONS_DB_PATH,
+        "manual_budget_db": MANUAL_BUDGET_DB_PATH,
+    }
+
+    result = {}
+
+    for database_name, database_path in database_files.items():
+        create_user_database_folder()
+
+        conn = sqlite3.connect(database_path)
+
+        tables = pd.read_sql_query(
+            """
+            SELECT name
+            FROM sqlite_master
+            WHERE type='table'
+            ORDER BY name
+            """,
+            conn,
+        )
+
+        conn.close()
+
+        result[database_name] = tables["name"].tolist()
+
+    return result
