@@ -3,6 +3,9 @@ import os
 import pandas as pd
 import streamlit as st
 
+
+from src.demo_data import load_demo_data
+
 from src.user_database import (
     load_user_transactions,
     load_user_budget,
@@ -24,6 +27,7 @@ from src.data_access import (
 from src.blockchain_audit import add_transaction_hashes
 from src.column_mapper import map_uploaded_columns
 from src.manual_entry import add_manual_transaction, add_manual_budget
+
 from src.utils.file_helpers import save_raw_file
 from src.ui.display import safe_dataframe
 
@@ -42,10 +46,12 @@ def data_input_page():
         [
             "Upload Original Transactions and Budget Files",
             "Upload Different Transaction CSV With Column Mapping",
+            "Quick Add Expense",
             "Enter Transaction Manually",
             "Enter Budget Manually",
             "View or Edit Manual Transactions",
             "View or Edit Manual Budget",
+            "Load Demo Data",
         ],
     )
 
@@ -54,6 +60,9 @@ def data_input_page():
 
     elif input_method == "Upload Different Transaction CSV With Column Mapping":
         flexible_csv_upload_section()
+
+    elif input_method == "Quick Add Expense":
+        quick_add_expense_section()
 
     elif input_method == "Enter Transaction Manually":
         manual_transaction_entry_section()
@@ -66,6 +75,9 @@ def data_input_page():
 
     elif input_method == "View or Edit Manual Budget":
         edit_manual_budget_section()
+
+    elif input_method == "Load Demo Data":
+        load_demo_data_section()
 
 
 def upload_data_page():
@@ -164,6 +176,12 @@ def flexible_csv_upload_section():
     st.write(
         "Use this option if your CSV has different column names. "
         "You will map your columns to the fields SmartBank AI needs."
+    )
+
+    st.info(
+        "Tip: Many banks allow you to download transactions as a CSV file. "
+        "Log in to online banking, go to statements or transactions, export as CSV, "
+        "then upload the file here and map the columns."
     )
 
     uploaded_file = st.file_uploader(
@@ -527,3 +545,104 @@ def edit_manual_budget_section():
 
         st.success("Manual budget category deleted successfully.")
         st.rerun()
+
+
+def quick_add_expense_section():
+    st.subheader("Quick Add Expense")
+
+    st.write(
+        "Use this form for fast daily spending tracking. "
+        "Only the key details are required."
+    )
+
+    try:
+        existing_budget = load_budget()
+        budget_categories = sorted(
+            existing_budget["category"].dropna().unique().tolist()
+        )
+    except Exception:
+        budget_categories = []
+
+    with st.form("quick_add_expense_form"):
+        amount = st.number_input(
+            "Amount",
+            min_value=0.0,
+            step=0.01,
+        )
+
+        description = st.text_input(
+            "Description",
+            value="Quick Expense",
+        )
+
+        if budget_categories:
+            category = st.selectbox(
+                "Category",
+                budget_categories + ["Other"],
+            )
+        else:
+            category = st.text_input(
+                "Category",
+                value="Other",
+            )
+
+        payment_method = st.selectbox(
+            "Payment Method",
+            [
+                "Debit Card",
+                "Credit Card",
+                "Cash",
+                "Bank Transfer",
+                "Online Payment",
+                "Other",
+            ],
+        )
+
+        submitted = st.form_submit_button("Save Expense")
+
+        if submitted:
+            if amount <= 0:
+                st.error("Please enter an amount greater than 0.")
+                return
+
+            transaction = {
+                "date": pd.Timestamp.today().date(),
+                "description": description,
+                "amount": amount,
+                "transaction_type": "debit",
+                "category": category,
+                "account_name": "Main Account",
+                "location": "Unknown",
+                "payment_method": payment_method,
+            }
+
+            updated_transactions = add_manual_transaction(transaction)
+
+            st.success("Expense saved successfully.")
+            st.subheader("Latest Manual Transactions")
+            safe_dataframe(updated_transactions.tail(), width="stretch")
+
+
+def load_demo_data_section():
+    st.subheader("Load Demo Data")
+
+    st.write(
+        "Use demo data to test the full application immediately, including "
+        "dashboard, budget tracker, prediction, unusual transactions, and blockchain audit."
+    )
+
+    st.warning(
+        "Demo data is for testing only. It will replace the current uploaded CSV data, "
+        "but it will not delete manually entered transactions or budgets."
+    )
+
+    if st.button("Load 12 Months of Demo Data"):
+        transactions, budget = load_demo_data()
+
+        st.success("Demo data loaded successfully.")
+
+        st.subheader("Demo Transactions Preview")
+        safe_dataframe(transactions.head(), width="stretch")
+
+        st.subheader("Demo Budget Preview")
+        safe_dataframe(budget.head(), width="stretch")

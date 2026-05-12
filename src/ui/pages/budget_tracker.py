@@ -5,7 +5,7 @@ from src.data_access import (
     load_app_transactions as load_transactions,
     load_app_budget as load_budget,
 )
-from src.budget_analysis import compare_budget_to_actual
+from src.budget_forecast import calculate_budget_forecast
 from src.ui.display import safe_dataframe
 
 
@@ -27,71 +27,85 @@ def budget_tracker_page():
             return
 
         st.write(
-            "This page compares your actual spending against your budget. "
-            "Select a month to see how much you have spent and how much budget remains."
+            "Track your spending against your budget, see your remaining balance, "
+            "and forecast whether you are likely to stay within budget this month."
         )
 
-        available_months = ["All"] + sorted(
+        available_months = sorted(
             transactions["month"].dropna().unique().tolist()
         )
 
+        if not available_months:
+            st.warning("No monthly transaction data available.")
+            return
+
         selected_month = st.selectbox(
-            "Select month for budget comparison",
+            "Select month",
             available_months,
+            index=len(available_months) - 1,
         )
 
-        comparison = compare_budget_to_actual(
+        comparison, summary = calculate_budget_forecast(
             transactions,
             budget,
             selected_month=selected_month,
         )
 
-        total_budget = comparison["budget"].sum()
-        total_spent = comparison["actual_spending"].sum()
-        total_remaining = total_budget - total_spent
+        st.subheader("Budget Summary")
 
-        over_budget_count = len(
-            comparison[comparison["budget_status"] == "Over Budget"]
-        )
-        close_to_limit_count = len(
-            comparison[comparison["budget_status"] == "Close to Limit"]
-        )
-        within_budget_count = len(
-            comparison[comparison["budget_status"] == "Within Budget"]
-        )
+        col1, col2, col3, col4 = st.columns(4)
 
-        col1, col2, col3 = st.columns(3)
+        col1.metric("Total Budget", f"£{summary['total_budget']:,.2f}")
+        col2.metric("Spent So Far", f"£{summary['total_spent']:,.2f}")
+        col3.metric("Remaining Budget", f"£{summary['total_remaining']:,.2f}")
+        col4.metric("Budget Health Score", f"{summary['health_score']}/100")
 
-        col1.metric("Total Budget", f"£{total_budget:,.2f}")
-        col2.metric("Actual Spending", f"£{total_spent:,.2f}")
-        col3.metric("Remaining Budget", f"£{total_remaining:,.2f}")
+        col5, col6, col7, col8 = st.columns(4)
 
-        col4, col5, col6 = st.columns(3)
+        col5.metric("Daily Allowance", f"£{summary['daily_allowance']:,.2f}")
+        col6.metric("Weekly Allowance", f"£{summary['weekly_allowance']:,.2f}")
+        col7.metric("Projected Month-End Spend", f"£{summary['total_projected']:,.2f}")
+        col8.metric("Days Left", summary["days_left"])
 
-        col4.metric("Over Budget", over_budget_count)
-        col5.metric("Close to Limit", close_to_limit_count)
-        col6.metric("Within Budget", within_budget_count)
-
-        if total_remaining < 0:
-            st.error(f"You are over your total budget by £{abs(total_remaining):,.2f}.")
+        if summary["projected_remaining"] < 0:
+            st.error(
+                f"At your current spending pace, you may exceed your budget by "
+                f"£{abs(summary['projected_remaining']):,.2f} this month."
+            )
         else:
             st.success(
-                f"You still have £{total_remaining:,.2f} remaining in your budget."
+                f"At your current spending pace, you may have "
+                f"£{summary['projected_remaining']:,.2f} left by the end of the month."
             )
 
-        st.subheader("Budget Comparison Table")
+        if summary["health_score"] >= 80:
+            st.success("Your budget health is good. You are mostly on track.")
+        elif summary["health_score"] >= 50:
+            st.warning("Your budget health is moderate. Some categories need attention.")
+        else:
+            st.error("Your budget health is low. You may need to reduce spending.")
+
+        st.subheader("Budget Forecast by Category")
 
         display_comparison = comparison.copy()
-        display_comparison["budget"] = display_comparison["budget"].round(2)
-        display_comparison["actual_spending"] = display_comparison[
-            "actual_spending"
-        ].round(2)
-        display_comparison["remaining_budget"] = display_comparison[
-            "remaining_budget"
-        ].round(2)
-        display_comparison["percentage_used"] = display_comparison[
-            "percentage_used"
-        ].round(2)
+
+        money_columns = [
+            "budget",
+            "actual_spending",
+            "remaining_budget",
+            "projected_month_end_spending",
+            "projected_remaining",
+            "daily_remaining_allowance",
+            "weekly_remaining_allowance",
+        ]
+
+        for column in money_columns:
+            if column in display_comparison.columns:
+                display_comparison[column] = display_comparison[column].round(2)
+
+        display_comparison["percentage_used"] = (
+            display_comparison["percentage_used"].round(2)
+        )
 
         safe_dataframe(
             display_comparison[
@@ -101,13 +115,18 @@ def budget_tracker_page():
                     "actual_spending",
                     "remaining_budget",
                     "percentage_used",
+                    "projected_month_end_spending",
+                    "projected_remaining",
+                    "daily_remaining_allowance",
+                    "weekly_remaining_allowance",
                     "budget_status",
+                    "pace_status",
                 ]
             ],
             width="stretch",
         )
 
-        st.subheader("Actual Spending vs Budget")
+        st.subheader("Budget vs Actual Spending")
 
         fig = px.bar(
             comparison,
@@ -119,13 +138,14 @@ def budget_tracker_page():
 
         st.plotly_chart(fig, width="stretch")
 
-        st.subheader("Remaining Budget by Category")
+        st.subheader("Projected Month-End Spending")
 
         fig2 = px.bar(
             comparison,
             x="category",
-            y="remaining_budget",
-            title="Remaining Budget by Category",
+            y=["budget", "projected_month_end_spending"],
+            barmode="group",
+            title="Budget vs Projected Month-End Spending",
         )
 
         st.plotly_chart(fig2, width="stretch")
