@@ -10,7 +10,6 @@ from src.user_database import (
     delete_user_transaction,
     add_or_update_user_budget,
     delete_user_budget,
-    list_user_tables,
 )
 from src.validate import (
     validate_transaction_columns,
@@ -47,7 +46,6 @@ def data_input_page():
             "Enter Budget Manually",
             "View or Edit Manual Transactions",
             "View or Edit Manual Budget",
-            "Debug User Database",
         ],
     )
 
@@ -68,9 +66,6 @@ def data_input_page():
 
     elif input_method == "View or Edit Manual Budget":
         edit_manual_budget_section()
-
-    elif input_method == "Debug User Database":
-        debug_user_database_section()
 
 
 def upload_data_page():
@@ -532,30 +527,3 @@ def edit_manual_budget_section():
 
         st.success("Manual budget category deleted successfully.")
         st.rerun()
-
-
-def debug_user_database_section():
-    st.subheader("Debug User Database")
-
-    st.write("This section shows what is currently saved in `database/user_inputs.db`.")
-
-    tables = list_user_tables()
-
-    st.write("Tables found in user_inputs.db:")
-    st.write(tables)
-
-    st.subheader("Manual Transactions Table")
-    manual_transactions = load_user_transactions()
-
-    if manual_transactions.empty:
-        st.warning("No manual transactions found in user_inputs.db.")
-    else:
-        safe_dataframe(manual_transactions, width="stretch")
-
-    st.subheader("Manual Budget Table")
-    manual_budget = load_user_budget()
-
-    if manual_budget.empty:
-        st.warning("No manual budget found in user_inputs.db.")
-    else:
-        safe_dataframe(manual_budget, width="stretch")
