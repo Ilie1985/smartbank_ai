@@ -5,8 +5,48 @@ from src.data_access import (
     load_app_transactions as load_transactions,
     load_app_budget as load_budget,
 )
+from src.user_database import load_user_budget, load_user_income
 from src.budget_forecast import calculate_budget_forecast
 from src.ui.display import safe_dataframe
+
+
+def get_active_budget():
+    """
+    Decide which budget should be used on the Budget Tracker page.
+
+    Priority:
+    1. Manual budget created by the user
+    2. Uploaded/demo budget if no manual budget exists
+    """
+
+    manual_budget = load_user_budget()
+
+    if manual_budget is not None and not manual_budget.empty:
+        return manual_budget, "Manual Budget"
+
+    uploaded_budget = load_budget()
+
+    return uploaded_budget, "Uploaded/Demo Budget"
+
+
+def get_monthly_income(selected_month: str) -> float:
+    """
+    Get saved monthly income for the selected month.
+    """
+
+    income_df = load_user_income()
+
+    if income_df.empty:
+        return 0.0
+
+    income_df["month"] = income_df["month"].astype(str)
+
+    matching_income = income_df[income_df["month"] == selected_month]
+
+    if matching_income.empty:
+        return 0.0
+
+    return float(matching_income.iloc[0]["income"])
 
 
 def budget_tracker_page():
@@ -14,7 +54,7 @@ def budget_tracker_page():
 
     try:
         transactions = load_transactions()
-        budget = load_budget()
+        budget, budget_source = get_active_budget()
 
         if transactions.empty:
             st.warning("No transaction data found.")
@@ -22,18 +62,34 @@ def budget_tracker_page():
 
         if budget.empty:
             st.warning(
-                "No budget data found. Please enter or upload budget categories first."
+                "No budget found. Please go to Budget Setup and create your budget first."
             )
             return
 
         st.write(
-            "Track your spending against your budget, see your remaining balance, "
-            "and forecast whether you are likely to stay within budget this month."
+            "This page tracks your spending against your active budget. "
+            "Expenses are deducted from budget categories when the transaction category matches the budget category."
         )
 
-        available_months = sorted(
-            transactions["month"].dropna().unique().tolist()
+        st.info(
+            f"Currently using: **{budget_source}**. "
+            "Only categories inside this budget are shown below."
         )
+
+        budget_categories = sorted(
+            budget["category"].dropna().astype(str).str.strip().str.title().unique()
+        )
+
+        transactions = transactions.copy()
+        transactions["category"] = (
+            transactions["category"].astype(str).str.strip().str.title()
+        )
+
+        filtered_transactions = transactions[
+            transactions["category"].isin(budget_categories)
+        ]
+
+        available_months = sorted(transactions["month"].dropna().unique().tolist())
 
         if not available_months:
             st.warning("No monthly transaction data available.")
@@ -46,46 +102,127 @@ def budget_tracker_page():
         )
 
         comparison, summary = calculate_budget_forecast(
-            transactions,
+            filtered_transactions,
             budget,
             selected_month=selected_month,
         )
 
-        st.subheader("Budget Summary")
+        monthly_income = get_monthly_income(selected_month)
+
+        monthly_budget = monthly_income
+        allocated_to_categories = summary["total_budget"]
+        available_to_allocate = monthly_budget - allocated_to_categories
+        remaining_monthly_budget = monthly_budget - summary["total_spent"]
+        projected_month_end_balance = monthly_budget - summary["total_projected"]
+
+        days_left = max(summary["days_left"], 1)
+
+        if monthly_budget > 0:
+            allowance_base = max(remaining_monthly_budget, 0)
+        else:
+            allowance_base = max(summary["total_remaining"], 0)
+
+        daily_allowance = allowance_base / days_left
+        weekly_allowance = min(daily_allowance * 7, allowance_base)
+
+        days_left = max(summary["days_left"], 1)
+
+        if monthly_budget > 0:
+            allowance_base = max(remaining_monthly_budget, 0)
+        else:
+            allowance_base = max(summary["total_remaining"], 0)
+
+        daily_allowance = allowance_base / days_left
+        
+
+        st.subheader("Monthly Money Overview")
+
+        monthly_budget = monthly_income
+        allocated_to_categories = allocated_to_categories
+        available_to_allocate = monthly_budget - allocated_to_categories
+        remaining_monthly_budget = monthly_budget - summary["total_spent"]
 
         col1, col2, col3, col4 = st.columns(4)
 
-        col1.metric("Total Budget", f"£{summary['total_budget']:,.2f}")
-        col2.metric("Spent So Far", f"£{summary['total_spent']:,.2f}")
-        col3.metric("Remaining Budget", f"£{summary['total_remaining']:,.2f}")
-        col4.metric("Budget Health Score", f"{summary['health_score']}/100")
+        col1.metric("Monthly Budget", f"£{monthly_budget:,.2f}")
+        col2.metric(
+            "Allocated to Categories", f"        £{allocated_to_categories:,.2f}"
+        )
+        col3.metric("Available to Allocate", f"        £{available_to_allocate:,.2f}")
+        col4.metric("Budget Health Score", f"{summary['health_score']}/        100")
 
         col5, col6, col7, col8 = st.columns(4)
 
-        col5.metric("Daily Allowance", f"£{summary['daily_allowance']:,.2f}")
-        col6.metric("Weekly Allowance", f"£{summary['weekly_allowance']:,.2f}")
-        col7.metric("Projected Month-End Spend", f"£{summary['total_projected']:,.2f}")
+        col5.metric("Spent So Far", f"£{summary['total_spent']:,.2f}")
+        col6.metric(
+            "Remaining Monthly Budget", f"        £{remaining_monthly_budget:,.2f}"
+        )
+        col7.metric(
+            "Projected Month-End Balance",
+            f"        £{projected_month_end_balance:,.2f}",
+        )
         col8.metric("Days Left", summary["days_left"])
 
-        if summary["projected_remaining"] < 0:
-            st.error(
-                f"At your current spending pace, you may exceed your budget by "
-                f"£{abs(summary['projected_remaining']):,.2f} this month."
+        col9, col10 = st.columns(2)
+
+        col9.metric("Safe Daily Spend", f"£{daily_allowance:,.2f}")
+        col10.metric(
+            "Projected Month-End Balance",
+            f"£{projected_month_end_balance:,.2f}",
+        )
+
+        st.caption(
+            "Safe Daily Spend is calculated from your remaining monthly budget divided by the number of days left in the month."
+        )
+
+        if monthly_income <= 0:
+            st.warning(
+                "No monthly income has been set for this month. "
+                "Go to Budget Setup → Set Monthly Income to improve this summary."
             )
         else:
-            st.success(
-                f"At your current spending pace, you may have "
-                f"£{summary['projected_remaining']:,.2f} left by the end of the month."
-            )
+            if available_to_allocate < 0:
+                st.warning(
+                    f"You have allocated £{abs(available_to_allocate):,.2f} more than your monthly budget. "
+                    "Consider reducing some category budgets."
+                )
+            else:
+                st.success(
+                    f"You still have £{available_to_allocate:,.2f}             available to allocate to categories."
+                )
+
+            if projected_month_end_balance < 0:
+                st.error(
+                    f"At your current spending pace, you may end the month "
+                    f"£{abs(projected_month_end_balance):,.2f} below your income."
+                )
+            else:
+                st.success(
+                    f"At your current spending pace, you may have "
+                    f"£{projected_month_end_balance:,.2f} left from your income by month end."
+                )
+
+        # if summary["projected_remaining"] < 0:
+        #     st.error(
+        #         f"At your current spending pace, you may exceed your budget by "
+        #         f"£{abs(summary['projected_remaining']):,.2f} this month."
+        #     )
+        # else:
+        #     st.success(
+        #         f"At your current spending pace, you may have "
+        #         f"£{summary['projected_remaining']:,.2f} left by the end of the month."
+        #     )
 
         if summary["health_score"] >= 80:
             st.success("Your budget health is good. You are mostly on track.")
         elif summary["health_score"] >= 50:
-            st.warning("Your budget health is moderate. Some categories need attention.")
+            st.warning(
+                "Your budget health is moderate. Some categories need attention."
+            )
         else:
             st.error("Your budget health is low. You may need to reduce spending.")
 
-        st.subheader("Budget Forecast by Category")
+        st.subheader("Budget Categories")
 
         display_comparison = comparison.copy()
 
@@ -103,9 +240,9 @@ def budget_tracker_page():
             if column in display_comparison.columns:
                 display_comparison[column] = display_comparison[column].round(2)
 
-        display_comparison["percentage_used"] = (
-            display_comparison["percentage_used"].round(2)
-        )
+        display_comparison["percentage_used"] = display_comparison[
+            "percentage_used"
+        ].round(2)
 
         safe_dataframe(
             display_comparison[
@@ -126,6 +263,40 @@ def budget_tracker_page():
             width="stretch",
         )
 
+        st.subheader("Matching Transactions")
+
+        month_transactions = filtered_transactions[
+            filtered_transactions["month"] == selected_month
+        ]
+
+        if month_transactions.empty:
+            st.info(
+                "No transactions found for the selected month that match your budget categories."
+            )
+        else:
+            display_transaction_columns = [
+                "date",
+                "description",
+                "amount",
+                "transaction_type",
+                "category",
+                "account_name",
+                "location",
+                "payment_method",
+                "data_source",
+            ]
+
+            available_columns = [
+                column
+                for column in display_transaction_columns
+                if column in month_transactions.columns
+            ]
+
+            safe_dataframe(
+                month_transactions[available_columns],
+                width="stretch",
+            )
+
         st.subheader("Budget vs Actual Spending")
 
         fig = px.bar(
@@ -138,7 +309,7 @@ def budget_tracker_page():
 
         st.plotly_chart(fig, width="stretch")
 
-        st.subheader("Projected Month-End Spending")
+        st.subheader("Budget vs Projected Month-End Spending")
 
         fig2 = px.bar(
             comparison,
@@ -153,6 +324,6 @@ def budget_tracker_page():
     except Exception as error:
         st.warning(
             "Please add both transaction data and budget data first. "
-            "You can upload files or enter data manually."
+            "You can create a budget in Budget Setup and add expenses using Quick Add Expense."
         )
         st.write(error)

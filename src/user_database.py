@@ -7,6 +7,8 @@ import pandas as pd
 MANUAL_TRANSACTIONS_DB_PATH = "database/manual_transactions.db"
 MANUAL_BUDGET_DB_PATH = "database/manual_budget.db"
 
+MANUAL_INCOME_DB_PATH = "database/manual_income.db"
+
 
 def create_user_database_folder():
     """
@@ -304,3 +306,97 @@ def list_user_tables() -> dict:
         result[database_name] = tables["name"].tolist()
 
     return result
+
+
+def load_user_income() -> pd.DataFrame:
+    """
+    Load manually entered monthly income from manual_income.db.
+    """
+
+    create_user_database_folder()
+
+    if not table_exists(MANUAL_INCOME_DB_PATH, "manual_income"):
+        return pd.DataFrame(columns=["month", "income"])
+
+    conn = sqlite3.connect(MANUAL_INCOME_DB_PATH)
+
+    df = pd.read_sql_query(
+        "SELECT * FROM manual_income",
+        conn,
+    )
+
+    conn.close()
+
+    return df
+
+
+def save_user_income(df: pd.DataFrame) -> None:
+    """
+    Save manually entered monthly income to manual_income.db.
+    """
+
+    create_user_database_folder()
+
+    safe_df = prepare_dataframe_for_sqlite(df)
+
+    conn = sqlite3.connect(MANUAL_INCOME_DB_PATH)
+
+    safe_df.to_sql(
+        "manual_income",
+        conn,
+        if_exists="replace",
+        index=False,
+    )
+
+    conn.close()
+
+
+def add_or_update_user_income(month: str, income: float) -> pd.DataFrame:
+    """
+    Add or update income for a selected month.
+    """
+
+    existing = load_user_income()
+
+    new_row = pd.DataFrame(
+        [
+            {
+                "month": str(month),
+                "income": float(income),
+            }
+        ]
+    )
+
+    if existing.empty:
+        updated = new_row
+    else:
+        existing["month"] = existing["month"].astype(str)
+        existing = existing[existing["month"] != str(month)]
+
+        updated = pd.concat(
+            [existing, new_row],
+            ignore_index=True,
+            sort=False,
+        )
+
+    save_user_income(updated)
+
+    return updated
+
+
+def delete_user_income(month: str) -> pd.DataFrame:
+    """
+    Delete income for a selected month.
+    """
+
+    df = load_user_income()
+
+    if df.empty:
+        return df
+
+    df["month"] = df["month"].astype(str)
+    df = df[df["month"] != str(month)]
+
+    save_user_income(df)
+
+    return df
