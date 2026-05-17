@@ -1,3 +1,4 @@
+import pandas as pd
 import plotly.express as px
 import streamlit as st
 
@@ -95,11 +96,22 @@ def budget_tracker_page():
             st.warning("No monthly transaction data available.")
             return
 
-        selected_month = st.selectbox(
+        month_labels = {
+            month: pd.to_datetime(month + "-01").strftime("%B %Y")
+            for month in available_months
+        }
+
+        selected_month_label = st.selectbox(
             "Select month",
-            available_months,
+            list(month_labels.values()),
             index=len(available_months) - 1,
         )
+
+        selected_month = [
+            month
+            for month, label in month_labels.items()
+            if label == selected_month_label
+        ][0]
 
         comparison, summary = calculate_budget_forecast(
             filtered_transactions,
@@ -133,7 +145,6 @@ def budget_tracker_page():
             allowance_base = max(summary["total_remaining"], 0)
 
         daily_allowance = allowance_base / days_left
-        
 
         st.subheader("Monthly Money Overview")
 
@@ -148,7 +159,7 @@ def budget_tracker_page():
         col2.metric(
             "Allocated to Categories", f"        £{allocated_to_categories:,.2f}"
         )
-        col3.metric("Available to Allocate", f"        £{available_to_allocate:,.2f}")
+        col3.metric("Budget Plan Difference", f"£{available_to_allocate:,.2f}")
         col4.metric("Budget Health Score", f"{summary['health_score']}/        100")
 
         col5, col6, col7, col8 = st.columns(4)
@@ -183,12 +194,13 @@ def budget_tracker_page():
         else:
             if available_to_allocate < 0:
                 st.warning(
-                    f"You have allocated £{abs(available_to_allocate):,.2f} more than your monthly budget. "
-                    "Consider reducing some category budgets."
+                    f"Your monthly budget is £{monthly_budget:,.2f}, but              your category budgets "
+                    f"add up to £{allocated_to_categories:,.2f}. "
+                    f"This means your plan is £{abs(available_to_allocate)             :,.2f} above your available budget."
                 )
             else:
                 st.success(
-                    f"You still have £{available_to_allocate:,.2f}             available to allocate to categories."
+                    f"You have £{available_to_allocate:,.2f} left to              assign to budget categories."
                 )
 
             if projected_month_end_balance < 0:
@@ -201,17 +213,6 @@ def budget_tracker_page():
                     f"At your current spending pace, you may have "
                     f"£{projected_month_end_balance:,.2f} left from your income by month end."
                 )
-
-        # if summary["projected_remaining"] < 0:
-        #     st.error(
-        #         f"At your current spending pace, you may exceed your budget by "
-        #         f"£{abs(summary['projected_remaining']):,.2f} this month."
-        #     )
-        # else:
-        #     st.success(
-        #         f"At your current spending pace, you may have "
-        #         f"£{summary['projected_remaining']:,.2f} left by the end of the month."
-        #     )
 
         if summary["health_score"] >= 80:
             st.success("Your budget health is good. You are mostly on track.")
