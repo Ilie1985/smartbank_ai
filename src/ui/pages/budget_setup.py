@@ -13,6 +13,15 @@ from src.user_database import (
 from src.ui.display import safe_dataframe
 
 
+def format_month_label(month_value):
+    """
+    Convert YYYY-MM into a user-friendly month label.
+    Example: 2026-05 becomes May 2026.
+    """
+
+    return pd.to_datetime(str(month_value) + "-01", errors="coerce").strftime("%B %Y")
+
+
 def budget_setup_page():
     st.header("Budget Setup")
 
@@ -49,11 +58,52 @@ def monthly_income_section():
 
     st.write(
         "Enter your income for a specific month. "
-        "The Budget Tracker will use this to calculate how much income remains after spending."
+        "The Budget Tracker will use this as your monthly budget pot."
+    )
+
+    current_year = pd.Timestamp.today().year
+
+    month_names = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        selected_month_name = st.selectbox(
+            "Select month",
+            month_names,
+            index=pd.Timestamp.today().month - 1,
+        )
+
+    with col2:
+        year_options = list(range(2020, 2036))
+
+        selected_year = st.selectbox(
+            "Select year",
+            year_options,
+            index=year_options.index(current_year),
+        )
+
+    selected_month_number = month_names.index(selected_month_name) + 1
+    month = f"{int(selected_year)}-{selected_month_number:02d}"
+
+    st.info(
+        f"You are setting income for **{selected_month_name} {int(selected_year)}**."
     )
 
     with st.form("monthly_income_form"):
-        selected_date = st.date_input("Select month")
         income = st.number_input(
             "Monthly Income",
             min_value=0.0,
@@ -63,12 +113,16 @@ def monthly_income_section():
         submitted = st.form_submit_button("Save Monthly Income")
 
         if submitted:
-            month = pd.to_datetime(selected_date).strftime("%Y-%m")
-
             updated_income = add_or_update_user_income(month, income)
 
-            st.success(f"Monthly income for {month} saved successfully.")
-            safe_dataframe(updated_income, width="stretch")
+            st.success(
+                f"Monthly income for {selected_month_name} {int(selected_year)} saved successfully."
+            )
+
+            display_income = updated_income.copy()
+            display_income["month"] = display_income["month"].apply(format_month_label)
+
+            safe_dataframe(display_income, width="stretch")
 
 
 def edit_monthly_income_section():
@@ -81,20 +135,35 @@ def edit_monthly_income_section():
         return
 
     st.write("Saved Monthly Income")
-    safe_dataframe(income_df, width="stretch")
 
-    selected_month = st.selectbox(
+    display_income = income_df.copy()
+    display_income["month"] = display_income["month"].apply(format_month_label)
+
+    safe_dataframe(display_income, width="stretch")
+
+    month_options = income_df["month"].tolist()
+
+    month_labels = {month: format_month_label(month) for month in month_options}
+
+    selected_month_label = st.selectbox(
         "Select month to edit or delete",
-        income_df["month"].tolist(),
+        list(month_labels.values()),
     )
+
+    selected_month = [
+        month for month, label in month_labels.items() if label == selected_month_label
+    ][0]
 
     selected_row = income_df[income_df["month"] == selected_month].iloc[0]
 
     with st.form("edit_monthly_income_form"):
-        month = st.text_input(
+        st.text_input(
             "Month",
-            value=str(selected_row.get("month", "")),
+            value=format_month_label(selected_row.get("month", "")),
+            disabled=True,
         )
+
+        month = selected_month
 
         income = st.number_input(
             "Monthly Income",

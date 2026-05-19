@@ -41,13 +41,13 @@ def home_page():
             st.session_state["selected_page"] = "Budget Tracker"
             st.rerun()
 
-        st.subheader("🤖 View Spending Prediction")
+        st.subheader("🤖 AI Spending Forecast")
         st.write(
             "Use machine learning to forecast future spending when enough data exists."
         )
 
-        if st.button("Go to Prediction"):
-            st.session_state["selected_page"] = "Prediction"
+        if st.button("Go to AI Spending Forecast"):
+            st.session_state["selected_page"] = "AI Spending Forecast"
             st.rerun()
 
     with col2:

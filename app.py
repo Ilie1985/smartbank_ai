@@ -30,7 +30,7 @@ PAGES = {
     "Dashboard": dashboard_page,
     "Budget Tracker": budget_tracker_page,
     "Spending Analysis": spending_analysis_page,
-    "Prediction": prediction_page,
+    "AI Spending Forecast": prediction_page,
     "Security Audit": blockchain_audit_page,
     "AI Insights": ai_insights_page,
     "About": about_page,

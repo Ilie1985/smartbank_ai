@@ -160,7 +160,7 @@ def budget_tracker_page():
             "Allocated to Categories", f"        £{allocated_to_categories:,.2f}"
         )
         col3.metric("Budget Plan Difference", f"£{available_to_allocate:,.2f}")
-        col4.metric("Budget Health Score", f"{summary['health_score']}/        100")
+        col4.metric("Budget Health Score", f"{summary['health_score']}/100")
 
         col5, col6, col7, col8 = st.columns(4)
 
@@ -170,7 +170,7 @@ def budget_tracker_page():
         )
         col7.metric(
             "Projected Month-End Balance",
-            f"        £{projected_month_end_balance:,.2f}",
+            f"£{projected_month_end_balance:,.2f}",
         )
         col8.metric("Days Left", summary["days_left"])
 
