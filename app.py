@@ -14,7 +14,6 @@ from src.ui.pages.blockchain_audit import blockchain_audit_page
 from src.ui.pages.ai_insights import ai_insights_page
 from src.ui.pages.about import about_page
 
-
 st.set_page_config(
     page_title="SmartBank AI",
     page_icon="🏦",
@@ -57,6 +56,31 @@ def main():
 
     if "selected_page" not in st.session_state:
         st.session_state["selected_page"] = "Home"
+
+    if "data_source_mode" not in st.session_state:
+        st.session_state["data_source_mode"] = "All data"
+
+    st.sidebar.markdown("### Data Source")
+
+    data_source_mode = st.sidebar.selectbox(
+        "Use data from",
+        [
+            "All data",
+            "Manual data only",
+            "Uploaded CSV data only",
+        ],
+        index=[
+            "All data",
+            "Manual data only",
+            "Uploaded CSV data only",
+        ].index(st.session_state["data_source_mode"]),
+    )
+
+    st.session_state["data_source_mode"] = data_source_mode
+
+    st.sidebar.caption(
+        "Choose whether pages use uploaded CSV data, manual entries, or both."
+    )
 
     selected_page = st.sidebar.radio(
         "Navigation",

@@ -1,146 +1,238 @@
+import os
+import sqlite3
+
 import pandas as pd
-
-from src.database import load_transactions, load_budget
-from src.user_database import load_user_transactions, load_user_budget
+import streamlit as st
 
 
-def standardise_transactions(df: pd.DataFrame) -> pd.DataFrame:
+DATABASE_DIR = "database"
+
+UPLOADED_TRANSACTIONS_DB = os.path.join(DATABASE_DIR, "uploaded_transactions.db")
+UPLOADED_BUDGET_DB = os.path.join(DATABASE_DIR, "uploaded_budget.db")
+
+MANUAL_TRANSACTIONS_DB = os.path.join(DATABASE_DIR, "manual_transactions.db")
+MANUAL_BUDGET_DB = os.path.join(DATABASE_DIR, "manual_budget.db")
+
+# Old fallback database, only used if your older functions still saved there.
+USER_INPUTS_DB = os.path.join(DATABASE_DIR, "user_inputs.db")
+
+
+TRANSACTION_COLUMNS = [
+    "date",
+    "description",
+    "amount",
+    "transaction_type",
+    "category",
+    "account_name",
+    "location",
+    "payment_method",
+    "balance",
+    "month",
+    "year",
+    "day",
+    "income",
+    "expense",
+    "transaction_hash",
+    "data_source",
+    "manual_id",
+]
+
+BUDGET_COLUMNS = [
+    "category",
+    "budget",
+]
+
+
+def get_data_source_mode() -> str:
     """
-    Standardise combined uploaded and manual transaction data.
+    Get the selected data source mode from Streamlit session state.
     """
+
+    return st.session_state.get("data_source_mode", "All data")
+
+
+def read_table_from_db(db_path: str, table_name: str) -> pd.DataFrame:
+    """
+    Safely read a table from a SQLite database.
+    If the database or table does not exist, return an empty dataframe.
+    """
+
+    if not os.path.exists(db_path):
+        return pd.DataFrame()
+
+    try:
+        with sqlite3.connect(db_path) as connection:
+            return pd.read_sql_query(
+                f"SELECT * FROM {table_name}",
+                connection,
+            )
+    except Exception:
+        return pd.DataFrame()
+
+
+def standardise_transaction_columns(df: pd.DataFrame, data_source: str) -> pd.DataFrame:
+    """
+    Make sure transaction data has the expected columns.
+    """
+
+    if df.empty:
+        return pd.DataFrame(columns=TRANSACTION_COLUMNS)
 
     data = df.copy()
 
-    if "date" in data.columns:
-        date_values = pd.to_datetime(data["date"], errors="coerce")
-        data["date"] = date_values.dt.strftime("%Y-%m-%d")
+    if "data_source" not in data.columns:
+        data["data_source"] = data_source
 
-        data["month"] = date_values.dt.to_period("M").astype(str)
-        data["year"] = date_values.dt.year
-        data["day"] = date_values.dt.day
-
-    if "amount" in data.columns:
-        data["amount"] = pd.to_numeric(data["amount"], errors="coerce").fillna(0)
-
-    if "income" not in data.columns and "transaction_type" in data.columns:
-        data["income"] = data.apply(
-            lambda row: abs(row["amount"])
-            if str(row["transaction_type"]).lower() == "credit"
-            else 0,
-            axis=1,
-        )
-
-    if "expense" not in data.columns and "transaction_type" in data.columns:
-        data["expense"] = data.apply(
-            lambda row: abs(row["amount"])
-            if str(row["transaction_type"]).lower() == "debit"
-            else 0,
-            axis=1,
-        )
-
-    optional_columns = ["account_name", "location", "payment_method"]
-
-    for column in optional_columns:
+    for column in TRANSACTION_COLUMNS:
         if column not in data.columns:
-            data[column] = "Unknown"
+            data[column] = None
 
-    return data
+    return data[TRANSACTION_COLUMNS]
+
+
+def standardise_budget_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Make sure budget data has the expected columns.
+    """
+
+    if df.empty:
+        return pd.DataFrame(columns=BUDGET_COLUMNS)
+
+    data = df.copy()
+
+    for column in BUDGET_COLUMNS:
+        if column not in data.columns:
+            data[column] = None
+
+    return data[BUDGET_COLUMNS]
+
+
+def load_uploaded_transactions() -> pd.DataFrame:
+    """
+    Load uploaded CSV transactions.
+    """
+
+    uploaded = read_table_from_db(
+        UPLOADED_TRANSACTIONS_DB,
+        "transactions",
+    )
+
+    # Fallback for older project versions that saved uploaded data into banking.db.
+    if uploaded.empty:
+        legacy_db = os.path.join(DATABASE_DIR, "banking.db")
+        uploaded = read_table_from_db(legacy_db, "transactions")
+
+    return standardise_transaction_columns(uploaded, "Uploaded CSV")
+
+
+def load_manual_transactions() -> pd.DataFrame:
+    """
+    Load manually entered transactions.
+    """
+
+    manual = read_table_from_db(
+        MANUAL_TRANSACTIONS_DB,
+        "manual_transactions",
+    )
+
+    # Fallback for older project versions.
+    if manual.empty:
+        manual = read_table_from_db(
+            USER_INPUTS_DB,
+            "manual_transactions",
+        )
+
+    return standardise_transaction_columns(manual, "Manual Entry")
+
+
+def load_uploaded_budget() -> pd.DataFrame:
+    """
+    Load uploaded budget data.
+    """
+
+    uploaded_budget = read_table_from_db(
+        UPLOADED_BUDGET_DB,
+        "budget",
+    )
+
+    # Fallback for older project versions that saved budget into banking.db.
+    if uploaded_budget.empty:
+        legacy_db = os.path.join(DATABASE_DIR, "banking.db")
+        uploaded_budget = read_table_from_db(legacy_db, "budget")
+
+    return standardise_budget_columns(uploaded_budget)
+
+
+def load_manual_budget() -> pd.DataFrame:
+    """
+    Load manually entered budget data.
+    """
+
+    manual_budget = read_table_from_db(
+        MANUAL_BUDGET_DB,
+        "manual_budget",
+    )
+
+    # Fallback for older project versions.
+    if manual_budget.empty:
+        manual_budget = read_table_from_db(
+            USER_INPUTS_DB,
+            "manual_budget",
+        )
+
+    return standardise_budget_columns(manual_budget)
 
 
 def load_app_transactions() -> pd.DataFrame:
     """
-    Load all transaction data used by the app.
+    Load transactions according to the selected data source mode.
 
-    This combines:
-    - uploaded CSV transactions from banking.db
-    - manual transactions from user_inputs.db
+    Modes:
+    - All data
+    - Manual data only
+    - Uploaded CSV data only
     """
 
-    frames = []
+    mode = get_data_source_mode()
 
-    try:
-        uploaded_transactions = load_transactions()
+    uploaded = load_uploaded_transactions()
+    manual = load_manual_transactions()
 
-        if not uploaded_transactions.empty:
-            uploaded_transactions["data_source"] = "Uploaded CSV"
-            frames.append(uploaded_transactions)
+    if mode == "Manual data only":
+        return manual
 
-    except Exception:
-        pass
-
-    try:
-        manual_transactions = load_user_transactions()
-
-        if not manual_transactions.empty:
-            manual_transactions["data_source"] = "Manual Entry"
-            frames.append(manual_transactions)
-
-    except Exception:
-        pass
-
-    if not frames:
-        raise FileNotFoundError("No transaction data found.")
+    if mode == "Uploaded CSV data only":
+        return uploaded
 
     combined = pd.concat(
-        frames,
+        [uploaded, manual],
         ignore_index=True,
-        sort=False,
     )
-
-    combined = standardise_transactions(combined)
 
     return combined
 
 
 def load_app_budget() -> pd.DataFrame:
     """
-    Load all budget data used by the app.
+    Load budget according to the selected data source mode.
 
-    This combines:
-    - uploaded CSV budget from banking.db
-    - manual budget from user_inputs.db
-
-    If a category exists in both places, the manual budget overrides the uploaded one.
+    Manual budgets are preferred in All data mode because they represent
+    the user's active budget plan.
     """
 
-    frames = []
+    mode = get_data_source_mode()
 
-    try:
-        uploaded_budget = load_budget()
+    manual_budget = load_manual_budget()
+    uploaded_budget = load_uploaded_budget()
 
-        if not uploaded_budget.empty:
-            uploaded_budget["data_source"] = "Uploaded CSV"
-            frames.append(uploaded_budget)
+    if mode == "Manual data only":
+        return manual_budget
 
-    except Exception:
-        pass
+    if mode == "Uploaded CSV data only":
+        return uploaded_budget
 
-    try:
-        manual_budget = load_user_budget()
+    # In All data mode, prefer manual budget if it exists.
+    if not manual_budget.empty:
+        return manual_budget
 
-        if not manual_budget.empty:
-            manual_budget["data_source"] = "Manual Entry"
-            frames.append(manual_budget)
-
-    except Exception:
-        pass
-
-    if not frames:
-        raise FileNotFoundError("No budget data found.")
-
-    combined = pd.concat(
-        frames,
-        ignore_index=True,
-        sort=False,
-    )
-
-    combined["category"] = combined["category"].astype(str).str.strip().str.title()
-    combined["budget"] = pd.to_numeric(combined["budget"], errors="coerce")
-    combined = combined.dropna(subset=["category", "budget"])
-
-    combined = combined.drop_duplicates(
-        subset=["category"],
-        keep="last",
-    )
-
-    return combined
+    return uploaded_budget

@@ -59,10 +59,25 @@ def prediction_page():
             )
 
             st.subheader("Current Monthly Spending Data")
-            safe_dataframe(monthly_check, width="stretch")
+
+            display_monthly_check = monthly_check.copy()
+
+            display_monthly_check["month"] = pd.to_datetime(
+                display_monthly_check["month"] + "-01",
+                errors="coerce",
+            ).dt.strftime("%B %Y")
+
+            safe_dataframe(display_monthly_check, width="stretch")
+
+            chart_monthly_check = monthly_check.copy()
+
+            chart_monthly_check["month"] = pd.to_datetime(
+                chart_monthly_check["month"] + "-01",
+                errors="coerce",
+            ).dt.strftime("%B %Y")
 
             fig = px.line(
-                monthly_check,
+                chart_monthly_check,
                 x="month",
                 y="expense",
                 markers=True,
