@@ -1,79 +1,131 @@
+from urllib.parse import quote
+
 import streamlit as st
 
 
-def home_page():
-    st.header("Welcome to SmartBank AI")
+def render_clickable_card(icon, badge, title, description, colour_class, target_page):
+    """
+    Render a clickable card that navigates to another Streamlit page.
+    """
 
-    st.write(
-        "SmartBank AI helps you track your spending, manage budgets, "
-        "forecast future expenses, and understand your financial habits."
+    encoded_page = quote(target_page)
+
+    st.markdown(
+        f"""
+<a class="card-link" href="?page={encoded_page}" target="_self">
+    <div class="action-card {colour_class}">
+        <div class="card-top">
+            <div class="card-icon">{icon}</div>
+            <div class="card-badge">{badge}</div>
+        </div>
+        <h3>{title}</h3>
+        <p>{description}</p>
+    </div>
+</a>
+""",
+        unsafe_allow_html=True,
+    )
+
+
+def home_page():
+    st.markdown(
+        """
+<div class="gradient-title">Welcome to SmartBank AI</div>
+<div class="hero-subtitle">
+A personal finance intelligence app that helps you track expenses, manage budgets,
+analyse spending patterns, detect unusual transactions, and forecast future spending
+using machine learning.
+</div>
+""",
+        unsafe_allow_html=True,
     )
 
     st.markdown(
         """
-        <div class="section-note">
-            Start by choosing one of the actions below. You can quickly add an expense,
-            set a budget, upload bank data, or check your financial dashboard.
-        </div>
-        """,
+<div class="section-header">
+    <span class="section-icon" style="background:#dbeafe;color:#2563eb;">🚀</span>
+    <span>Start here</span>
+</div>
+""",
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.subheader("💸 Quick Add Expense")
-        st.write(
-            "Record a new expense quickly. This is useful for daily spending tracking."
+        render_clickable_card(
+            icon="⚡",
+            badge="Fast",
+            title="Quick Add Expense",
+            description="Add daily spending quickly and keep your budget tracker up to date.",
+            colour_class="card-green",
+            target_page="Quick Add Expense",
         )
-
-        if st.button("Go to Quick Add Expense"):
-            st.session_state["selected_page"] = "Quick Add Expense"
-            st.rerun()
-
-        st.subheader("📊 Check Budget Health")
-        st.write(
-            "See your remaining budget, daily allowance, weekly allowance, "
-            "and projected month-end spending."
-        )
-
-        if st.button("Go to Budget Tracker"):
-            st.session_state["selected_page"] = "Budget Tracker"
-            st.rerun()
-
-        st.subheader("🤖 AI Spending Forecast")
-        st.write(
-            "Use machine learning to forecast future spending when enough data exists."
-        )
-
-        if st.button("Go to AI Spending Forecast"):
-            st.session_state["selected_page"] = "AI Spending Forecast"
-            st.rerun()
 
     with col2:
-        st.subheader("🧾 Set or Update Budget")
-        st.write(
-            "Create or update your monthly budget categories."
+        render_clickable_card(
+            icon="💙",
+            badge="Plan",
+            title="Set Monthly Budget",
+            description="Create your monthly income and budget categories so expenses can be tracked properly.",
+            colour_class="card-blue",
+            target_page="Budget Setup",
         )
 
-        if st.button("Go to Budget Setup"):
-            st.session_state["selected_page"] = "Budget Setup"
-            st.rerun()
-
-        st.subheader("📁 Upload Bank CSV")
-        st.write(
-            "Upload a bank statement CSV or use column mapping for different CSV formats."
+    with col3:
+        render_clickable_card(
+            icon="📤",
+            badge="Import",
+            title="Upload Bank CSV",
+            description="Upload a bank statement CSV and map columns such as Money In, Money Out, and Reference.",
+            colour_class="card-orange",
+            target_page="Upload Data",
         )
 
-        if st.button("Go to Upload Data"):
-            st.session_state["selected_page"] = "Upload Data"
-            st.rerun()
+    col4, col5, col6 = st.columns(3)
 
-        st.subheader("📈 View Dashboard")
-        st.write(
-            "See your income, expenses, category spending, and monthly trends."
+    with col4:
+        render_clickable_card(
+            icon="🤖",
+            badge="ML",
+            title="AI Spending Forecast",
+            description="Use machine learning to estimate future monthly spending once enough data is available.",
+            colour_class="card-purple",
+            target_page="AI Spending Forecast",
         )
 
-        if st.button("Go to Dashboard"):
-            st.session_state["selected_page"] = "Dashboard"
-            st.rerun()
+    with col5:
+        render_clickable_card(
+            icon="📊",
+            badge="Insights",
+            title="View Dashboard",
+            description="See income, expenses, savings, category spending, and monthly trends.",
+            colour_class="card-blue",
+            target_page="Dashboard",
+        )
+
+    with col6:
+        render_clickable_card(
+            icon="🔐",
+            badge="Audit",
+            title="Security Audit",
+            description="Check transaction hashes and identify possible changes in stored transaction records.",
+            colour_class="card-red",
+            target_page="Security Audit",
+        )
+
+    st.markdown(
+        """
+<div class="section-header">
+    <span class="section-icon" style="background:#ede9fe;color:#7c3aed;">✨</span>
+    <span>Recommended user journey</span>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
+
+    st.info(
+        "Start by setting your monthly income and budget categories. "
+        "Then add expenses manually or upload a bank CSV. "
+        "After enough monthly history is available, the AI Spending Forecast can predict future spending."
+    )

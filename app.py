@@ -57,6 +57,12 @@ def main():
     if "selected_page" not in st.session_state:
         st.session_state["selected_page"] = "Home"
 
+    query_page = st.query_params.get("page")
+
+    if query_page in PAGES:
+        st.session_state["selected_page"] = query_page
+        st.query_params.clear()
+
     if "data_source_mode" not in st.session_state:
         st.session_state["data_source_mode"] = "All data"
 
@@ -78,17 +84,21 @@ def main():
 
     st.session_state["data_source_mode"] = data_source_mode
 
-    st.sidebar.caption(
-        "Choose whether pages use uploaded CSV data, manual entries, or both."
-    )
+    st.sidebar.caption("Choose which data source the app should use.")
+
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### Navigation")
 
     selected_page = st.sidebar.radio(
-        "Navigation",
+        "",
         list(PAGES.keys()),
         index=list(PAGES.keys()).index(st.session_state["selected_page"]),
     )
 
     st.session_state["selected_page"] = selected_page
+
+    st.sidebar.markdown("---")
+    st.sidebar.caption("SmartBank AI")
 
     page_function = PAGES[selected_page]
     page_function()
