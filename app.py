@@ -69,23 +69,38 @@ def main():
 
     st.sidebar.markdown("### Data Source")
 
+    data_source_options = [
+        "All data",
+        "Manual data only",
+        "Uploaded CSV data only",
+    ]
+
+    data_source_labels = {
+        "All data": "Best available data",
+        "Manual data only": "Manual data only",
+        "Uploaded CSV data only": "Uploaded CSV data     only",
+    }
+
+    current_mode = st.session_state.get("data_source_mode", "All data")
+
+    if current_mode not in data_source_options:
+        current_mode = "All data"
+
     data_source_mode = st.sidebar.selectbox(
         "Use data from",
-        [
-            "All data",
-            "Manual data only",
-            "Uploaded CSV data only",
-        ],
-        index=[
-            "All data",
-            "Manual data only",
-            "Uploaded CSV data only",
-        ].index(st.session_state["data_source_mode"]),
+        data_source_options,
+        index=data_source_options.index(current_mode),
+        format_func=lambda option: data_source_labels.get(option, option),
     )
 
     st.session_state["data_source_mode"] = data_source_mode
 
-    st.sidebar.caption("Choose which data source the app should use.")
+    if st.session_state["selected_page"] == "AI Spending     Forecast":
+        st.sidebar.caption(
+            "Best available data uses uploaded CSV data     for ML and only adds manual data once it has     enough monthly history."
+        )
+    else:
+        st.sidebar.caption("Choose which data source the     app should use.")
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("### Navigation")
