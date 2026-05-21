@@ -12,8 +12,16 @@ body,
 
 .stApp {
   background:
-    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 28%),
-    radial-gradient(circle at top right, rgba(147, 51, 234, 0.08), transparent 28%),
+    radial-gradient(
+      circle at top left,
+      rgba(59, 130, 246, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(147, 51, 234, 0.08),
+      transparent 28%
+    ),
     linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
@@ -122,6 +130,7 @@ div {
 
 /* ================================
    Home Cards
+   Same Size on All Screens
    ================================ */
 
 div[data-testid="column"] {
@@ -132,12 +141,15 @@ div[data-testid="column"] {
 div[data-testid="stHorizontalBlock"] {
   gap: 1rem !important;
   margin-bottom: 1rem !important;
+  align-items: stretch !important;
 }
 
 .card-link {
   text-decoration: none !important;
   color: inherit !important;
-  display: block;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .card-link:hover {
@@ -145,24 +157,27 @@ div[data-testid="stHorizontalBlock"] {
   color: inherit !important;
 }
 
+/* This is the main fixed card size */
 .action-card {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(226, 232, 240, 0.95);
   border-radius: 22px;
-  padding: 1.35rem;
+  padding: 1.45rem;
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
   transition: all 0.22s ease;
   position: relative;
   overflow: hidden;
   cursor: pointer;
 
-  height: 270px !important;
-  min-height: 270px !important;
-  max-height: 270px !important;
+  width: 100% !important;
+  height: 340px !important;
+  min-height: 340px !important;
+  max-height: 340px !important;
+  box-sizing: border-box !important;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
 }
 
 .action-card:hover {
@@ -183,12 +198,15 @@ div[data-testid="stHorizontalBlock"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
+  min-height: 58px;
 }
 
 .card-icon {
   width: 58px;
   height: 58px;
+  min-width: 58px;
+  min-height: 58px;
   border-radius: 18px;
   display: inline-flex;
   align-items: center;
@@ -205,20 +223,27 @@ div[data-testid="stHorizontalBlock"] {
   background: var(--icon-bg, #eff6ff);
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 .action-card h3 {
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.35;
-  margin-bottom: 0.9rem;
+  min-height: 3rem;
+  margin-bottom: 1rem;
   color: #111827;
 }
 
 .action-card p {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: #64748b;
-  line-height: 1.6;
+  line-height: 1.55;
   margin-bottom: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Card colours */
@@ -254,7 +279,7 @@ div[data-testid="stHorizontalBlock"] {
 }
 
 /* ================================
-   Sidebar - Desktop
+   Sidebar
    ================================ */
 
 section[data-testid="stSidebar"] {
@@ -458,8 +483,31 @@ section[data-testid="stSidebar"] caption {
 }
 
 /* ================================
+   Medium Screens
+   Cards stay same size
+   ================================ */
+
+@media (max-width: 1100px) {
+  .block-container {
+    max-width: 100% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .action-card {
+    height: 340px !important;
+    min-height: 340px !important;
+    max-height: 340px !important;
+  }
+
+  .action-card p {
+    -webkit-line-clamp: 5;
+  }
+}
+
+/* ================================
    Small Screens
-   Do NOT force sidebar open here
+   Cards still stay equal
    ================================ */
 
 @media (max-width: 900px) {
@@ -483,14 +531,31 @@ section[data-testid="stSidebar"] caption {
     font-size: 1.35rem;
   }
 
-  .action-card {
-    height: auto !important;
-    min-height: 230px !important;
-    max-height: none !important;
-  }
-
   div[data-testid="column"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+
+  .action-card {
+    height: 340px !important;
+    min-height: 340px !important;
+    max-height: 340px !important;
+  }
+}
+
+/* ================================
+   Very Small Screens
+   Slightly taller but still equal
+   ================================ */
+
+@media (max-width: 650px) {
+  .action-card {
+    height: 360px !important;
+    min-height: 360px !important;
+    max-height: 360px !important;
+  }
+
+  .action-card p {
+    -webkit-line-clamp: 6;
   }
 }
