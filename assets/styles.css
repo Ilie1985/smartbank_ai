@@ -12,16 +12,8 @@ body,
 
 .stApp {
   background:
-    radial-gradient(
-      circle at top left,
-      rgba(59, 130, 246, 0.08),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at top right,
-      rgba(147, 51, 234, 0.08),
-      transparent 28%
-    ),
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 28%),
+    radial-gradient(circle at top right, rgba(147, 51, 234, 0.08), transparent 28%),
     linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
@@ -39,19 +31,24 @@ body,
   padding-right: 2rem !important;
 }
 
-/* When sidebar is collapsed, keep page centred and balanced */
-@media (min-width: 1300px) {
-  .block-container {
-    max-width: 1180px !important;
-  }
+/* ================================
+   Header
+   ================================ */
+
+.smartbank-hero {
+  margin-bottom: 1.5rem;
 }
 
-@media (max-width: 1100px) {
-  .block-container {
-    max-width: 100% !important;
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
-  }
+.smartbank-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.3rem;
+}
+
+.smartbank-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
 }
 
 /* ================================
@@ -79,7 +76,7 @@ div {
 }
 
 .gradient-title {
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-size: clamp(2.3rem, 4vw, 3.4rem);
   line-height: 1.05;
   font-weight: 800;
   letter-spacing: -0.05em;
@@ -257,12 +254,10 @@ div[data-testid="stHorizontalBlock"] {
 }
 
 /* ================================
-   Sidebar
+   Sidebar - Desktop
    ================================ */
 
 section[data-testid="stSidebar"] {
-  width: 285px !important;
-  min-width: 285px !important;
   background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
   border-right: 1px solid #e5e7eb;
 }
@@ -316,6 +311,18 @@ section[data-testid="stSidebar"] caption {
   font-size: 0.78rem !important;
   color: #64748b !important;
   line-height: 1.4 !important;
+}
+
+/* Hide sidebar arrows only on larger screens */
+@media (min-width: 901px) {
+  [data-testid="stSidebarCollapseButton"],
+  [data-testid="collapsedControl"],
+  button[title="Collapse sidebar"],
+  button[title="Expand sidebar"] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
 
 /* ================================
@@ -451,7 +458,8 @@ section[data-testid="stSidebar"] caption {
 }
 
 /* ================================
-   Responsive
+   Small Screens
+   Do NOT force sidebar open here
    ================================ */
 
 @media (max-width: 900px) {
@@ -462,7 +470,7 @@ section[data-testid="stSidebar"] caption {
   }
 
   .gradient-title {
-    font-size: 2.3rem !important;
+    font-size: 2.2rem !important;
     line-height: 1.1;
   }
 
@@ -472,12 +480,17 @@ section[data-testid="stSidebar"] caption {
   }
 
   .section-header {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
 
   .action-card {
     height: auto !important;
     min-height: 230px !important;
     max-height: none !important;
+  }
+
+  div[data-testid="column"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

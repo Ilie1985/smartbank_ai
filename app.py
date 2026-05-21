@@ -18,6 +18,7 @@ st.set_page_config(
     page_title="SmartBank AI",
     page_icon="🏦",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
 
@@ -90,9 +91,10 @@ def main():
     st.sidebar.markdown("### Navigation")
 
     selected_page = st.sidebar.radio(
-        "",
+        "Navigation menu",
         list(PAGES.keys()),
         index=list(PAGES.keys()).index(st.session_state["selected_page"]),
+        label_visibility="collapsed",
     )
 
     st.session_state["selected_page"] = selected_page
