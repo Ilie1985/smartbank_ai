@@ -55,20 +55,6 @@ def main():
     load_css()
     render_header()
 
-    if "selected_page" not in st.session_state:
-        st.session_state["selected_page"] = "Home"
-
-    query_page = st.query_params.get("page")
-
-    if query_page in PAGES:
-        st.session_state["selected_page"] = query_page
-        st.query_params.clear()
-
-    if "data_source_mode" not in st.session_state:
-        st.session_state["data_source_mode"] = "All data"
-
-    st.sidebar.markdown("### Data Source")
-
     data_source_options = [
         "All data",
         "Manual data only",
@@ -78,13 +64,33 @@ def main():
     data_source_labels = {
         "All data": "Best available data",
         "Manual data only": "Manual data only",
-        "Uploaded CSV data only": "Uploaded CSV data     only",
+        "Uploaded CSV data only": "Uploaded CSV data only",
     }
+
+    if "selected_page" not in st.session_state:
+        st.session_state["selected_page"] = "Home"
+
+    if "data_source_mode" not in st.session_state:
+        st.session_state["data_source_mode"] = "All data"
+
+    query_page = st.query_params.get("page")
+    query_data_source = st.query_params.get("data_source")
+
+    if query_data_source in data_source_options:
+        st.session_state["data_source_mode"] = query_data_source
+
+    if query_page in PAGES:
+        st.session_state["selected_page"] = query_page
+
+    if query_page or query_data_source:
+        st.query_params.clear()
 
     current_mode = st.session_state.get("data_source_mode", "All data")
 
     if current_mode not in data_source_options:
         current_mode = "All data"
+
+    st.sidebar.markdown("### Data Source")
 
     data_source_mode = st.sidebar.selectbox(
         "Use data from",
@@ -95,12 +101,13 @@ def main():
 
     st.session_state["data_source_mode"] = data_source_mode
 
-    if st.session_state["selected_page"] == "AI Spending     Forecast":
+    if st.session_state["selected_page"] == "AI Spending Forecast":
         st.sidebar.caption(
-            "Best available data uses uploaded CSV data     for ML and only adds manual data once it has     enough monthly history."
+            "Best available data uses uploaded CSV data for ML and only adds "
+            "manual data once it has enough monthly history."
         )
     else:
-        st.sidebar.caption("Choose which data source the     app should use.")
+        st.sidebar.caption("Choose which data source the app should use.")
 
     st.sidebar.markdown("---")
     st.sidebar.markdown("### Navigation")

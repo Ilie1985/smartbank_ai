@@ -1,18 +1,21 @@
 from urllib.parse import quote
-
 import streamlit as st
 
 
 def render_clickable_card(icon, badge, title, description, colour_class, target_page):
     """
-    Render a clickable card that navigates to another Streamlit page.
+    Render a clickable card that navigates to another Streamlit page
+    while keeping the selected data source mode.
     """
 
+    current_data_source = st.session_state.get("data_source_mode", "All data")
+
     encoded_page = quote(target_page)
+    encoded_data_source = quote(current_data_source)
 
     st.markdown(
         f"""
-<a class="card-link" href="?page={encoded_page}" target="_self">
+<a class="card-link" href="?page={encoded_page}&data_source={encoded_data_source}" target="_self">
     <div class="action-card {colour_class}">
         <div class="card-top">
             <div class="card-icon">{icon}</div>
